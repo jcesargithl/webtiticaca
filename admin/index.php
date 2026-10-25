@@ -17,7 +17,7 @@ if (isset($_GET['msg'])) {
 // Procesar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
     $password = $_POST['password'] ?? '';
-    if ($password === ADMIN_PASSWORD) {
+    if (hash('sha256', $password) === ADMIN_PASSWORD_HASH) {
         $_SESSION['admin_logged'] = true;
         header('Location: index.php');
         exit;

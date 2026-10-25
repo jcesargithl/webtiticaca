@@ -2,3 +2,4 @@
 error_log
 .idea/
 .vscode/
+admin/config.local.php
