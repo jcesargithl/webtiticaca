@@ -18,7 +18,7 @@ if (!$post) {
 
 $date_parts = get_spanish_date_parts($post['date'] ?? '');
 $display_date = !empty($post['display_date']) ? $post['display_date'] : $date_parts['full'];
-$recent_posts = get_recent_posts(3, $post['slug']);
+$recent_posts = get_recent_posts(3);
 $categories = get_all_categories();
 $all_tags = get_all_tags();
 $post_tags = !empty($post['tags']) && is_array($post['tags']) ? $post['tags'] : [];
@@ -214,13 +214,13 @@ $author_name = !empty($post['author']) ? $post['author'] : 'Ernesto Aliaga';
                                     </div>
                                     <ul class="recent">
                                         <?php foreach ($recent_posts as $r): 
-                                            $r_thumb = !empty($r['image_thumb']) ? $r['image_thumb'] : (!empty($r['image_cover']) ? $r['image_cover'] : 'img/slider/slidepost.jpg');
+                                            $r_thumb = !empty($r['image_cover']) ? $r['image_cover'] : (!empty($r['image_thumb']) ? $r['image_thumb'] : 'img/slider/slidepost.jpg');
                                             $r_url = 'post.php?slug=' . urlencode($r['slug']);
                                         ?>
                                             <li>
                                                 <div class="thum">
-                                                    <a href="<?= $r_url ?>">
-                                                        <img src="<?= htmlspecialchars($r_thumb) ?>" alt="<?= htmlspecialchars($r['title']) ?>">
+                                                    <a href="<?= $r_url ?>" style="margin-left: 0 !important; display: block;">
+                                                        <img src="<?= htmlspecialchars($r_thumb) ?>" alt="<?= htmlspecialchars($r['title']) ?>" style="width: 100%; height: 65px; object-fit: cover;">
                                                     </a>
                                                 </div> 
                                                 <a href="<?= $r_url ?>"><?= htmlspecialchars($r['title']) ?></a>
