@@ -1,0 +1,22 @@
+# Habilitar motor de reescritura
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Redirigir blog.html a blog.php de forma transparente
+    RewriteRule ^blog\.html$ blog.php [L,QSA]
+
+    # Redirigir posts antiguos a la nueva plantilla dinámica
+    RewriteRule ^post1\.html$ post.php?slug=la-observacion-de-aves-una-actividad-fascinante [L,QSA]
+    RewriteRule ^post2\.html$ post.php?slug=puno-remo-parado-en-tabla-el-nuevo-deporte-del-titicaca [L,QSA]
+    RewriteRule ^post3\.html$ post.php?slug=misticismo-en-peru [L,QSA]
+
+    # Soporte para URLs amigables /post/nombre-del-slug
+    RewriteRule ^post/([a-zA-Z0-9_-]+)/?$ post.php?slug=$1 [L,QSA]
+</IfModule>
+
+# Proteger el archivo de datos JSON para que nadie pueda descargarlo directamente por URL
+<Files "posts.json">
+    Order allow,deny
+    Deny from all
+</Files>
