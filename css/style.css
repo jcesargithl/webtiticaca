@@ -115,6 +115,7 @@ input[type="text"]:focus,
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus,
+input[type="number"]:focus,
 textarea:focus {
     outline: none;
 }
@@ -122,6 +123,7 @@ input[type="password"],
 input[type="email"],
 input[type="text"],
 input[type="file"],
+input[type="number"],
 textarea {
     outline: none;
     max-width: 100%;
@@ -140,6 +142,14 @@ textarea {
     font-size: 16px;
     font-weight: 400;
     color: #676977;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 input:focus,
 textarea:focus {
@@ -3626,23 +3636,31 @@ border-left: 1px solid #fff;
     top: 0;
     background: inherit;
 }
-.input1_inner {
+.input1_inner,
+.input_user_inner {
     position: relative;
 }
-.input1_inner:after {
+.input1_inner:after,
+.input_user_inner:after {
     content: '';
     display: block;
     position: absolute;
     right: 30px;
     top: 23px;
     pointer-events: none;
-    content: "\e6b6";
     font-family: "themify";
     font-size: 16px;
     color: #2095AE;
     line-height: 1;
 }
-.input1_inner input {
+.input1_inner:after {
+    content: "\e6b6";
+}
+.input_user_inner:after {
+    content: "\e602";
+}
+.input1_inner input,
+.input_user_inner input {
     display: block;
     width: 100%;
     font-size: 16px;
@@ -3652,16 +3670,28 @@ border-left: 1px solid #fff;
     border: none;
     box-shadow: none;
     border-radius: 0;
+    line-height: 1.5em;
+    font-family: 'Barlow', sans-serif;
 }
-.input1_inner input::placeholder {
+.input1_inner input::placeholder,
+.input_user_inner input::placeholder {
     font-size: 16px;
     color: #676977 !important;
 }
-.input1_inner input:focus {
+.input1_inner input:focus,
+.input_user_inner input:focus {
     outline: none;
     box-shadow: none;
     background: #fff;
     color: #0f2454 !important;
+}
+.input_user_inner input[type="number"]::-webkit-outer-spin-button,
+.input_user_inner input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input_user_inner input[type="number"] {
+    -moz-appearance: textfield;
 }
 .input2_inner {
     position: relative;
