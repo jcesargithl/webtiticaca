@@ -466,15 +466,53 @@ $tripadvisor_profile_url = !empty($stats['tripadvisor_url'])
     <script src="js/jquery-migrate-3.0.0.min.js"></script>
     <script src="js/modernizr-2.6.2.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/jquery.isotope.v3.0.2.js"></script>
     <script src="js/pace.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scrollIt.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/jquery.magnific-popup.js"></script>
+    <script src="js/YouTubePopUp.js"></script>
+    <script src="js/select2.js"></script>
+    <script src="js/datepicker.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/smooth-scroll.min.js"></script>
     <script src="js/custom.js"></script>
+    <!-- Translator Engine -->
+    <script src="js/translator.js"></script>
 
-    <!-- Script de Filtro Interactivo de Reseñas -->
+    <!-- Script de Filtro Interactivo de Reseñas e Inicialización Segura del Footer Carousel -->
     <script>
+        $(document).ready(function() {
+            // Garantizar inicialización del carrusel de footer si aún no ha cargado
+            var $footerCarousel = $('.footer-trust-carousel');
+            if ($footerCarousel.length && typeof $footerCarousel.owlCarousel === 'function' && !$footerCarousel.hasClass('owl-loaded')) {
+                $footerCarousel.owlCarousel({
+                    loop: true,
+                    margin: 15,
+                    items: 3,
+                    slideBy: 3,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    autoplay: true,
+                    autoplayTimeout: 3500,
+                    autoplayHoverPause: true,
+                    smartSpeed: 500,
+                    dots: false,
+                    nav: false,
+                    responsiveClass: true,
+                    responsive: {
+                        0: { items: 3, slideBy: 3, margin: 10 },
+                        600: { items: 3, slideBy: 3, margin: 12 },
+                        1000: { items: 3, slideBy: 3, margin: 15 }
+                    }
+                });
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             var filterButtons = document.querySelectorAll('.reviews-filter-btn');
             var reviewItems = document.querySelectorAll('.review-card-item');
