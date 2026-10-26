@@ -210,7 +210,10 @@ $default_avatars = [
                         </a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center gap-2">
+                                <div class="d-flex align-items-center gap-2">
+                    <a href="backup.php" class="btn btn-sm btn-success fw-semibold shadow-sm" title="Descargar copia de seguridad completa (.zip)">
+                        <i class="bi bi-cloud-arrow-down-fill me-1"></i> Copia de Seguridad
+                    </a>
                     <a href="../index.html" target="_blank" class="btn btn-sm btn-outline-light">
                         <i class="bi bi-eye me-1"></i> Ver Sitio en Vivo
                     </a>
