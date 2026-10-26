@@ -46,18 +46,24 @@ $(function () {
     });
     
     // Navbar scrolling background
-    wind.on("scroll", function () {
+    function checkNavbarScroll() {
         var bodyScroll = wind.scrollTop(),
             navbar = $(".navbar"),
             logo = $(".navbar .logo> img");
         if (bodyScroll > 100) {
             navbar.addClass("nav-scroll");
-            logo.attr('src', 'img/logo-dark.png');
+            if (logo.attr('src') !== 'img/logo-dark.png') {
+                logo.attr('src', 'img/logo-dark.png');
+            }
         } else {
             navbar.removeClass("nav-scroll");
-            logo.attr('src', 'img/logo-light.png');
+            if (logo.attr('src') !== 'img/logo-light.png') {
+                logo.attr('src', 'img/logo-light.png');
+            }
         }
-    });
+    }
+    wind.on("scroll", checkNavbarScroll);
+    checkNavbarScroll();
     
     // Close navbar-collapse when a  clicked
     $(".navbar-nav .dropdown-item a").on('click', function () {
