@@ -107,6 +107,7 @@ $tripadvisor_profile_url = !empty($stats['tripadvisor_url'])
             flex-direction: column;
             justify-content: flex-start;
             position: relative;
+            overflow: hidden;
             transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .review-card:hover {
@@ -114,14 +115,37 @@ $tripadvisor_profile_url = !empty($stats['tripadvisor_url'])
             box-shadow: 0 16px 36px rgba(15, 36, 84, 0.1);
             border-color: var(--brand-cyan);
         }
+
+        /* Prevenir cualquier pseudoelemento o triángulo desalineado */
+        .review-card::before,
+        .review-card::after,
+        .review-card-item::before,
+        .review-card-item::after,
+        .review-card-stars::before,
+        .review-card-stars::after,
+        .review-card-stars *::before,
+        .review-card-stars *::after {
+            display: none !important;
+            content: none !important;
+            border: none !important;
+            background: none !important;
+        }
+
+        /* Ícono de Comillas (Moderno y Tipográfico, no "66") */
         .review-card-quote-icon {
             position: absolute;
-            top: 24px;
-            right: 28px;
-            font-size: 26px;
-            color: rgba(32, 149, 174, 0.2);
+            top: 22px;
+            right: 24px;
+            color: var(--brand-cyan);
+            opacity: 0.16;
             line-height: 1;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
+        .review-card:hover .review-card-quote-icon {
+            opacity: 0.28;
+        }
+
         .review-author-thumb {
             width: 52px;
             height: 52px;
@@ -134,7 +158,10 @@ $tripadvisor_profile_url = !empty($stats['tripadvisor_url'])
             color: var(--star-gold);
             font-size: 13px;
             margin-bottom: 4px;
-            letter-spacing: 2px;
+            line-height: 1;
+        }
+        .review-star {
+            display: inline-block;
             line-height: 1;
         }
         .review-author-name {
@@ -327,18 +354,21 @@ $tripadvisor_profile_url = !empty($stats['tripadvisor_url'])
                         <div class="col-lg-4 col-md-6 mb-30 review-card-item" data-source="<?= $source ?>">
                             <div class="review-card">
                                 
-                                <div class="review-card-quote-icon">
-                                    <i class="ti-quote-left"></i>
+                                <!-- Comillas elegantes en SVG (no el glifo "66") -->
+                                <div class="review-card-quote-icon" title="Cita">
+                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                                    </svg>
                                 </div>
 
                                 <!-- Cabecera del Autor (con distintivo idéntico a sección testimonio) -->
                                 <div class="d-flex align-items-center gap-3">
                                     <img src="<?= $photo ?>" alt="<?= $name ?>" class="review-author-thumb" onerror="this.src='img/team/07.png'">
                                     <div>
-                                        <!-- Estrellas doradas -->
+                                        <!-- Estrellas doradas limpias sin pseudoelementos -->
                                         <div class="review-card-stars">
                                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <i class="star<?= $i <= $rating ? ' active' : '' ?>" style="color: <?= $i <= $rating ? '#f59e0b' : '#cbd5e1' ?>;">★</i>
+                                                <span class="review-star" style="color: <?= $i <= $rating ? '#f59e0b' : '#cbd5e1' ?>; font-size: 14px; margin-right: 1px;">★</span>
                                             <?php endfor; ?>
                                         </div>
 
@@ -440,6 +470,7 @@ $tripadvisor_profile_url = !empty($stats['tripadvisor_url'])
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scrollIt.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
     <script src="js/custom.js"></script>
 
     <!-- Script de Filtro Interactivo de Reseñas -->
