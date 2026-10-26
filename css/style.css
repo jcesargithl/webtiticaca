@@ -2314,9 +2314,18 @@ hr.border-2 {
     font-size: 36px;
     color: #2095AE;
 }
+.phone-call .icon svg {
+    width: 36px;
+    height: 36px;
+    fill: #2095AE;
+    display: block;
+}
 .phone-call .icon.color-1 span {
     font-size: 36px;
     color: #fff;
+}
+.phone-call .icon.color-1 svg {
+    fill: #fff;
 }
 .phone-call .text {
     margin-left: 15px;
