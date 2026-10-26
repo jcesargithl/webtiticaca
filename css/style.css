@@ -1790,7 +1790,6 @@ hr {
     align-items: center;
     gap: 8px;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 3px solid #2095AE;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     transition: background 0.35s ease, transform 0.35s ease, opacity 0.3s ease, box-shadow 0.35s ease, border-color 0.35s ease;
     pointer-events: none;
@@ -1807,7 +1806,6 @@ hr {
 }
 .about .about-tour-link:hover .about-tour-badge {
     background: #2095AE;
-    border-left-color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(32, 149, 174, 0.45);
 }
