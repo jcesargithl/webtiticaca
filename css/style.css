@@ -4243,6 +4243,7 @@ ol.comment-list li .children li {
     padding-top: 13px;
     padding-bottom: 13px;
 }
+button.butn-dark,
 .butn-dark a {
     font-size: 16px;
     font-weight: 400;
@@ -4252,7 +4253,13 @@ ol.comment-list li .children li {
     padding: 14px 25px;
     margin: 0;
     position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    overflow: hidden;
+    line-height: 1.2em;
 }
+button.butn-dark:after,
 .butn-dark a:after {
     content: '';
     width: 0;
@@ -4266,20 +4273,24 @@ ol.comment-list li .children li {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
+button.butn-dark span,
 .butn-dark a span {
     position: relative;
     z-index: 2;
 }
+button.butn-dark span i,
 .butn-dark a span i {
     font-size: 10px;
     margin-left: 3px;
 }
+button.butn-dark:hover:after,
 .butn-dark a:hover:after {
     width: 100%;
     left: 0;
     -webkit-transition: width 0.3s ease;
     transition: width 0.3s ease;
 }
+button.butn-dark:hover span,
 .butn-dark a:hover span {
     color: #fff;
 }

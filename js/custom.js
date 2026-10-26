@@ -552,23 +552,35 @@ var form = $('.contact__form'),
         message.text(response);
         setTimeout(function () {
             message.fadeOut();
-        }, 2000);
-        form.find('input:not([type="submit"]), textarea').val('');
+        }, 4000);
+        form.find('input:not([type="submit"]):not([type="checkbox"]), textarea').val('');
+        form.find('input[type="checkbox"]').prop('checked', false);
+        if (typeof turnstile !== 'undefined') {
+            try { turnstile.reset(); } catch (err) {}
+        }
     }
     // fail function
     function fail_func(data) {
-        message.fadeIn().removeClass('alert-success').addClass('alert-success');
-        message.text(data.responseText);
+        message.fadeIn().removeClass('alert-success').addClass('alert-danger');
+        var errorMsg = data.responseText || 'Ocurrió un error al procesar tu solicitud. Intenta nuevamente.';
+        message.text(errorMsg);
         setTimeout(function () {
             message.fadeOut();
-        }, 2000);
+        }, 5000);
+        if (typeof turnstile !== 'undefined') {
+            try { turnstile.reset(); } catch (err) {}
+        }
     }
     form.submit(function (e) {
         e.preventDefault();
+        var submitBtn = $(this).find('button[type="submit"]');
+        submitBtn.prop('disabled', true);
         form_data = $(this).serialize();
         $.ajax({
             type: 'POST',
             url: form.attr('action'),
             data: form_data
-        }).done(done_func).fail(fail_func);
+        }).done(done_func).fail(fail_func).always(function () {
+            submitBtn.prop('disabled', false);
+        });
     });

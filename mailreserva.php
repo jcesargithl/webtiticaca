@@ -1,126 +1,159 @@
 <?php
-    
-    $captcha=$_POST['cf-turnstile-response'];
+// Desactivar visualización de errores en pantalla para producción
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 
-    if (!$captcha) {
-      // What happens when the CAPTCHA was entered incorrectly
-      echo '<h2>Revise el formulario que contiene el captcha.</h2>';
-                      echo "<script> location.href='/' </script>";
-            exit;
+// Solo permitir solicitudes POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Método no permitido.');
+}
+
+// 1. Obtener y validar el token de Cloudflare Turnstile
+$captcha = trim($_POST['cf-turnstile-response'] ?? '');
+
+if (empty($captcha)) {
+    http_response_code(400);
+    exit('Por favor completa la verificación de seguridad (Captcha).');
+}
+
+$secretKey = "0x4AAAAAAAEh5oKSfOhZBhQy7rXq-oZP5LA";
+$remoteIp  = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+
+$postData = [
+    'secret'   => $secretKey,
+    'response' => $captcha,
+    'remoteip' => $remoteIp
+];
+
+$verifySuccess = false;
+
+// Método principal: cURL
+if (function_exists('curl_init')) {
+    $ch = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if ($response !== false) {
+        $data = json_decode($response, true);
+        if (!empty($data['success'])) {
+            $verifySuccess = true;
+        }
     }
- 
-    $secretKey = "0x4AAAAAAAEh5oKSfOhZBhQy7rXq-oZP5LA";
-    $ip = $_SERVER['REMOTE_ADDR'];
- 
-    $url_path = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-    $data = array('secret' => $secretKey, 'response' => $captcha, 'remoteip' => $ip);
-     
-     $options = array(
-         'http' => array(
-         'method' => 'POST',
-         'content' => http_build_query($data))
-     );
-     
-     $stream = stream_context_create($options);
-     
-     $result = file_get_contents(
-             $url_path, false, $stream);
-     
-     $response =  $result;
-    
-    $responseKeys = json_decode($response,true);
-    //print_r ($responseKeys);
-       if(intval($responseKeys["success"]) !== 1) {
-            echo '<h2>spam?</h2>';
-       } else { 
- //Put your mail code here
+}
 
+// Método fallback: file_get_contents
+if (!$verifySuccess && ini_get('allow_url_fopen')) {
+    $options = [
+        'http' => [
+            'method'  => 'POST',
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'content' => http_build_query($postData),
+            'timeout' => 10
+        ]
+    ];
+    $context  = stream_context_create($options);
+    $response = @file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, $context);
+    if ($response !== false) {
+        $data = json_decode($response, true);
+        if (!empty($data['success'])) {
+            $verifySuccess = true;
+        }
+    }
+}
 
-                    
-                ini_set('display_errors', 1);
-                ini_set('display_startup_errors', 1);
-                error_reporting(E_ALL);
+if (!$verifySuccess) {
+    http_response_code(400);
+    exit('La verificación de seguridad ha fallado o expiró. Por favor recarga la página e intenta de nuevo.');
+}
 
-                $name = isset( $_POST["name"] )? $_POST["name"] : "";
-                $email = isset( $_POST["email"] )? $_POST["email"] : "";
-                $phone = isset( $_POST["phone"] )? $_POST["phone"] : "";
-                $fecha = isset( $_POST["fecha"] )? $_POST["fecha"] : "";
-                $people = isset( $_POST["people"] )? $_POST["people"] : "";
-                $message = isset( $_POST["message"] )? $_POST["message"] : "";
-                $tour = isset( $_POST["tour"] )? $_POST["tour"] : "";
-                
+// 2. Obtener y validar campos
+$tour    = mb_substr(trim($_POST['tour'] ?? ''), 0, 150);
+$name    = mb_substr(trim($_POST['name'] ?? ''), 0, 100);
+$email   = mb_substr(trim($_POST['email'] ?? ''), 0, 150);
+$phone   = mb_substr(trim($_POST['phone'] ?? ''), 0, 40);
+$fecha   = mb_substr(trim($_POST['fecha'] ?? ''), 0, 30);
+$people  = mb_substr(trim($_POST['people'] ?? ''), 0, 10);
+$message = mb_substr(trim($_POST['message'] ?? ''), 0, 3000);
 
-                $correo_destino="gerencia@titicacaexperiencesperu.com";
-                
-      
+if (empty($name) || empty($email) || empty($phone)) {
+    http_response_code(400);
+    exit('Por favor completa todos los campos requeridos.');
+}
 
-                function Send4Mail( $arrMail="", $subject="", $content="", $sign="Reserva-Titicaca Experiences" )
-                {
-                    // as array allways
-                    //
-                    $arrMail = is_array($arrMail)? $arrMail : [ $arrMail ];
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    exit('Por favor ingresa un correo electrónico válido.');
+}
 
-                //        $from = $arrMail[0];
+// 3. Sanitizar datos contra inyección HTML
+$safe_tour    = htmlspecialchars($tour, ENT_QUOTES, 'UTF-8');
+$safe_name    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+$safe_email   = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+$safe_phone   = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
+$safe_fecha   = htmlspecialchars($fecha, ENT_QUOTES, 'UTF-8');
+$safe_people  = htmlspecialchars($people, ENT_QUOTES, 'UTF-8');
+$safe_message = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
 
-                    $from ="noreply@titicacaexperiencesperu.com";
-                    $cc = "titicacaexperiences@gmail.com";
+$clean_name  = str_replace(["\r", "\n"], '', $name);
+$clean_email = str_replace(["\r", "\n"], '', $email);
 
-                    // send 1 or many mails in batch
-                    //
-                    foreach( $arrMail as $item ){
+// 4. Configurar envío
+$correo_destino = "gerencia@titicacaexperiencesperu.com";
+$cc             = "titicacaexperiences@gmail.com";
+$from           = "noreply@titicacaexperiencesperu.com";
+$sign           = "Reserva - Titicaca Experiences";
 
-                        // concat the header mime type
-                        //
-                        $header = "MIME-Version: 1.0\r\n"
-                            . "Content-type: text/html; charset=UTF-8\r\n"
-                            ////. "To: $item\r\n"
-                            . "From: $sign <$from>\r\n"      // Signature <dest>
-                            . ( (!$cc)? "" : "Cc: $cc\r\n")  // when CC exists
-                            . "X-Mailer: PHP/" . phpversion();
+$email_subject   = "Formulario Reserva: " . ($tour ?: 'Tour General');
+$encoded_subject = "=?UTF-8?B?" . base64_encode($email_subject) . "?=";
 
+$headers   = [];
+$headers[] = "MIME-Version: 1.0";
+$headers[] = "Content-type: text/html; charset=UTF-8";
+$headers[] = "From: {$sign} <{$from}>";
+$headers[] = "Reply-To: {$clean_name} <{$clean_email}>";
+if (!empty($cc)) {
+    $headers[] = "Cc: {$cc}";
+}
+$headers[] = "X-Mailer: PHP/" . phpversion();
 
-                        $res = mail( $item, $subject, $content, $header, "-f ".$from );
-                    }
+$email_content = "<!DOCTYPE html>
+<html>
+<head><meta charset='UTF-8'></head>
+<body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>
+    <div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;'>
+        <h2 style='color: #2095AE; border-bottom: 2px solid #2095AE; padding-bottom: 8px;'>Nueva Solicitud de Reserva</h2>
+        " . ($safe_tour ? "<p><strong>Tour:</strong> {$safe_tour}</p>" : "") . "
+        <p><strong>Nombre:</strong> {$safe_name}</p>
+        <p><strong>Correo electrónico:</strong> <a href='mailto:{$safe_email}'>{$safe_email}</a></p>
+        <p><strong>Teléfono:</strong> {$safe_phone}</p>
+        " . ($safe_fecha ? "<p><strong>Fecha estimada:</strong> {$safe_fecha}</p>" : "") . "
+        " . ($safe_people ? "<p><strong>Número de personas:</strong> {$safe_people}</p>" : "") . "
+        <p><strong>Mensaje / Comentarios:</strong></p>
+        <div style='background: #f9f9f9; padding: 15px; border-left: 4px solid #2095AE; border-radius: 4px;'>
+            {$safe_message}
+        </div>
+        <hr style='border: none; border-top: 1px solid #eee; margin-top: 25px;'>
+        <p style='font-size: 12px; color: #888;'>Este correo fue enviado automáticamente desde el sitio web titicacaexperiencesperu.com</p>
+    </div>
+</body>
+</html>";
 
-                    if( ! $res )
-                        echo "Alerta : El mensaje no pudo ser enviado";
-                }
+$headers_str = implode("\r\n", $headers);
+$enviado     = @mail($correo_destino, $encoded_subject, $email_content, $headers_str, "-f " . $from);
 
-
-             
-                
-                $name = isset( $_POST["name"] )? $_POST["name"] : "";
-                $email = isset( $_POST["email"] )? $_POST["email"] : "";
-                $phone = isset( $_POST["phone"] )? $_POST["phone"] : "";
-                $fecha = isset( $_POST["fecha"] )? $_POST["fecha"] : "";
-                $people = isset( $_POST["people"] )? $_POST["people"] : "";
-                $message = isset( $_POST["message"] )? $_POST["message"] : "";
-                $tour = isset( $_POST["tour"] )? $_POST["tour"] : "";
-
-
-
-
-                $cadena = "<h1>Formulario Reserva</h1>
-                <br>
-                Tour : ".$tour."<br>
-                Nombre : " .$name."<br>
-                Correo : " .$email."<br>
-                Teléfono : ".$phone."<br>
-                Fecha : ".$fecha."<br>
-                Número de personas : ".$people."<br>
-                Mensaje : ".$message;
-
-
-
-                Send4Mail( $correo_destino, "Formulario Reserva", $cadena );
-                echo "Enviado exitosamente R";
-              //  echo "<script> location.href='/tour-amantani.html' </script>";
-                //echo "<hr><a href=''> Reload </a>";
-                //echo "<script> location.href='' </script>";
-
-                //fin 
- }   
-    
-    
-
+if ($enviado) {
+    http_response_code(200);
+    echo "Tu solicitud de reserva fue enviada satisfactoriamente. Nos comunicaremos contigo pronto.";
+} else {
+    http_response_code(500);
+    echo "No se pudo enviar la solicitud en este momento. Por favor contáctanos vía WhatsApp o teléfono.";
+}
 ?>
