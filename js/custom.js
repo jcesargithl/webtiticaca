@@ -131,27 +131,85 @@ $(function () {
     });
     
     // Testimonials owlCarousel *
-    $('.testimonials .owl-carousel').owlCarousel({
-        loop: true,
-        margin: 30,
-        mouseDrag: true,
-        autoplay: false,
-        dots: true,
-        nav: false,
-        navText: ["<span class='lnr ti-angle-left'></span>", "<span class='lnr ti-angle-right'></span>"],
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1,
-            },
-            600: {
-                items: 1
-            },
-            1000: {
-                items: 1
+    var $testiCarousel = $('.testimonials .owl-carousel');
+    function initTestimonialsCarousel($el) {
+        $el.owlCarousel({
+            loop: true,
+            margin: 30,
+            mouseDrag: true,
+            autoplay: false,
+            dots: true,
+            nav: false,
+            navText: ["<span class='lnr ti-angle-left'></span>", "<span class='lnr ti-angle-right'></span>"],
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
             }
+        });
+    }
+
+    if ($testiCarousel.length) {
+        if ($testiCarousel.attr('data-server-rendered') === 'true') {
+            initTestimonialsCarousel($testiCarousel);
+        } else {
+            // Cargar reseñas dinámicas aleatorias vía API para páginas estáticas
+            var apiReviewsUrl = (window.location.pathname.indexOf('/post/') !== -1 ? '../' : '') + 'api/reviews.php?limit=3';
+            $.getJSON(apiReviewsUrl, function(data) {
+                if (data && data.success && data.reviews && data.reviews.length > 0) {
+                    var itemsHtml = '';
+                    var googleIconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align: -1px; margin-right: 3px;"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.67v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.16z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27a7.22 7.22 0 0 1 0-4.54V6.58H1.25a11.96 11.96 0 0 0 0 10.84l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>';
+
+                    $.each(data.reviews, function(idx, rev) {
+                        var name = rev.name || 'Viajero';
+                        var role = rev.role || 'Viajero';
+                        var text = rev.text || '';
+                        var photo = rev.photo || 'img/team/07.png';
+                        var rating = rev.rating || 5;
+                        var googleUrl = (rev.google_url || '').trim();
+                        var hasLink = googleUrl.length > 0;
+
+                        var starsHtml = '<div class="rating">';
+                        for (var s = 1; s <= 5; s++) {
+                            starsHtml += ' <i class="star ' + (s <= rating ? 'active' : '') + '"></i>';
+                        }
+                        starsHtml += ' </div>';
+
+                        itemsHtml += '<div class="item">';
+                        if (hasLink) {
+                            itemsHtml += '<a href="' + googleUrl + '" target="_blank" rel="noopener noreferrer" class="testimonial-card-link" title="Ver reseña en Google">';
+                        }
+                        itemsHtml += '<p>' + text + '</p>';
+                        itemsHtml += '<div class="info">';
+                        itemsHtml += '<div class="author-img"> <img src="' + photo + '" alt="' + name + '"> </div>';
+                        itemsHtml += '<div class="cont">';
+                        itemsHtml += starsHtml;
+                        if (hasLink) {
+                            itemsHtml += '<h6>' + name + ' <span class="google-badge-pill" title="Reseña en Google">' + googleIconSvg + 'Google</span></h6> <span>' + role + '</span>';
+                        } else {
+                            itemsHtml += '<h6>' + name + '</h6> <span>' + role + '</span>';
+                        }
+                        itemsHtml += '</div></div>';
+                        if (hasLink) {
+                            itemsHtml += '</a>';
+                        }
+                        itemsHtml += '</div>';
+                    });
+                    $testiCarousel.html(itemsHtml);
+                }
+                initTestimonialsCarousel($testiCarousel);
+            }).fail(function() {
+                initTestimonialsCarousel($testiCarousel);
+            });
         }
-    });
+    }
     
     // Tours 1 owlCarousel *
     $('.tours1 .owl-carousel').owlCarousel({

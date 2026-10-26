@@ -193,66 +193,7 @@ $initial_show = 10; // Número de imágenes visibles inicialmente (2 ciclos comp
     <?php endif; ?>
 
     <!-- Testimonials -->
-    <section class="testimonials">
-        <div class="background bg-img bg-fixed section-padding pb-0" data-background="img/slider/home-review.jpg" data-overlay-dark="5">
-            <div class="container">
-                <div class="row">
-                    <!-- Call Now  -->
-                    <div class="col-md-5 mb-30 mt-30">
-                        <p><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i></p>
-                        <h5>¡Ofrecemos los mejores destinos turísticos para que conozcas y disfrutes el Lago Titicaca!</h5>
-                        <div class="phone-call mb-10">
-                            <div class="icon color-1"><span class="flaticon-phone-call"></span></div>
-                            <div class="text">
-                                <p class="color-1">Contáctanos</p> <a class="color-1" href="tel:+51 950766721">+51 950766721</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Booking From -->
-                    <div class="col-md-5 offset-md-2">
-                        <div class="testimonials-box">
-                            <div class="head-box">
-                                <h6>Testimonios</h6>
-                                <h4>Reseñas de nuestros viajeros</h4>
-                            </div>
-                            <div class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <p>Excelente servicio, en todos los sentidos. De inicio a final. Amabilidad, confianza y muuuuucha buena vibra ✨🌏.</p>
-                                    <div class="info">
-                                        <div class="author-img"> <img src="img/team/07.png" alt=""> </div>
-                                        <div class="cont">
-                                            <div class="rating"> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> </div>
-                                            <h6>Nidia Perez</h6> <span>Viajero</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <p>Excelente servicio, el personal muy amable.</p>
-                                    <div class="info">
-                                        <div class="author-img"> <img src="img/team/08.png" alt=""> </div>
-                                        <div class="cont">
-                                            <div class="rating"> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> </div>
-                                            <h6>Eberth Calsin</h6> <span>Viajero</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <p>Muy agradecida con su servicio de primera, lo recomiendo.</p>
-                                    <div class="info">
-                                        <div class="author-img"> <img src="img/team/09.png" alt=""> </div>
-                                        <div class="cont">
-                                            <div class="rating"> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> <i class="star active"></i> </div>
-                                            <h6>Silvia Ichillumpa</h6> <span>Viajero</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php include __DIR__ . '/includes/testimonials.php'; ?>
 
     <!-- Clients -->
     <section class="clients">

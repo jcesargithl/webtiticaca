@@ -135,6 +135,11 @@ $unread_count = $is_logged ? get_unread_messages_count() : 0;
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="testimonios.php">
+                            <i class="bi bi-chat-heart me-1"></i> Reseñas
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link px-3 py-1 text-white-50" href="mensajes.php">
                             <i class="bi bi-envelope me-1"></i> Mensajes
                             <?php if ($unread_count > 0): ?>
