@@ -79,6 +79,7 @@ $current_script = basename($_SERVER['PHP_SELF'] ?? '');
                 <li class="nav-item"><a class="nav-link <?= $current_script === 'about.html' ? 'active' : '' ?>" href="about.html">Nosotros</a></li>
                 <li class="nav-item"><a class="nav-link <?= in_array($current_script, ['galeria.html', 'galeria.php']) ? 'active' : '' ?>" href="galeria.html">Galería</a></li>
                 <li class="nav-item <?= in_array($current_script, ['blog.php', 'post.php', 'blog.html']) ? 'active' : '' ?>"><a class="nav-link <?= in_array($current_script, ['blog.php', 'post.php', 'blog.html']) ? 'active' : '' ?>" href="blog.php">Blog</a></li>
+                <li class="nav-item <?= in_array($current_script, ['resenas.php', 'reviews.php']) ? 'active' : '' ?>"><a class="nav-link <?= in_array($current_script, ['resenas.php', 'reviews.php']) ? 'active' : '' ?>" href="resenas.php">Reseñas</a></li>
                 <li class="nav-item"><a class="nav-link <?= $current_script === 'contacto.html' ? 'active' : '' ?>" href="contacto.html">Contacto</a></li>
             </ul>
         </div>

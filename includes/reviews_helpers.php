@@ -198,3 +198,128 @@ function render_testimonials_carousel_items($reviews = null) {
     
     return $output;
 }
+
+/**
+ * Determinar la fuente / plataforma de una reseña
+ * @param array $review
+ * @return string 'google' | 'tripadvisor' | 'web'
+ */
+function get_review_source_type($review) {
+    $url = trim(!empty($review['review_url']) ? $review['review_url'] : ($review['google_url'] ?? ''));
+    if ($url === '') {
+        return 'web';
+    }
+    $info = get_review_platform_info($url);
+    if ($info && in_array($info['platform'], ['google', 'tripadvisor'])) {
+        return $info['platform'];
+    }
+    return 'web';
+}
+
+/**
+ * Obtener estadísticas consolidadas y métricas de reseñas activas
+ * @return array
+ */
+function get_reviews_stats() {
+    $active = get_all_reviews(true);
+    $total = count($active);
+    
+    $google_count = 0;
+    $tripadvisor_count = 0;
+    $web_count = 0;
+    $sum_ratings = 0;
+    $first_google_url = '';
+    $first_tripadvisor_url = '';
+    
+    foreach ($active as $r) {
+        $rating = isset($r['rating']) ? (float)$r['rating'] : 5.0;
+        $sum_ratings += $rating;
+        
+        $url = trim(!empty($r['review_url']) ? $r['review_url'] : ($r['google_url'] ?? ''));
+        $source = get_review_source_type($r);
+        
+        if ($source === 'google') {
+            $google_count++;
+            if ($first_google_url === '' && !empty($url)) {
+                $first_google_url = $url;
+            }
+        } elseif ($source === 'tripadvisor') {
+            $tripadvisor_count++;
+            if ($first_tripadvisor_url === '' && !empty($url)) {
+                $first_tripadvisor_url = $url;
+            }
+        } else {
+            $web_count++;
+        }
+    }
+    
+    $average = ($total > 0) ? round($sum_ratings / $total, 1) : 5.0;
+    
+    return [
+        'total' => $total,
+        'average' => number_format($average, 1, '.', ''),
+        'google_count' => $google_count,
+        'tripadvisor_count' => $tripadvisor_count,
+        'web_count' => $web_count,
+        'google_url' => $first_google_url,
+        'tripadvisor_url' => $first_tripadvisor_url,
+        'recommendation_rate' => 100
+    ];
+}
+
+/**
+ * Generar datos estructurados Schema.org para SEO (AggregateRating + Review)
+ * @param array $reviews
+ * @param array $stats
+ * @return string
+ */
+function render_reviews_schema_json($reviews, $stats) {
+    if (empty($reviews)) {
+        return '';
+    }
+    
+    $schemaReviews = [];
+    foreach (array_slice($reviews, 0, 10) as $rev) {
+        $schemaReviews[] = [
+            '@type' => 'Review',
+            'author' => [
+                '@type' => 'Person',
+                'name' => $rev['name'] ?? 'Viajero'
+            ],
+            'datePublished' => !empty($rev['created_at']) ? substr($rev['created_at'], 0, 10) : date('Y-m-d'),
+            'reviewBody' => $rev['text'] ?? '',
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'bestRating' => '5',
+                'ratingValue' => (string)($rev['rating'] ?? 5),
+                'worstRating' => '1'
+            ]
+        ];
+    }
+    
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'TravelAgency',
+        'name' => 'Titicaca Experiences Perú',
+        'image' => 'https://titicacaexperiencesperu.com/img/logo-titie.png',
+        'telephone' => '+51950766721',
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => 'Jirón Ayacucho Nº 774',
+            'addressLocality' => 'Puno',
+            'addressRegion' => 'Puno',
+            'addressCountry' => 'PE'
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => (string)($stats['average'] ?? '5.0'),
+            'reviewCount' => (string)($stats['total'] ?? count($reviews)),
+            'bestRating' => '5',
+            'worstRating' => '1'
+        ],
+        'review' => $schemaReviews
+    ];
+    
+    return '<script type="application/ld+json">' . "\n" . json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n" . '</script>';
+}
+

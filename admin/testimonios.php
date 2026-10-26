@@ -230,6 +230,9 @@ $default_avatars = [
                 <p class="text-muted mb-0">Gestiona los testimonios de los viajeros con soporte para <strong>Google Maps</strong> y <strong>Tripadvisor</strong>. En cada recarga de página se eligen <strong>3 reseñas al azar</strong>.</p>
             </div>
             <div class="col-md-5 text-md-end">
+                <a href="../resenas.php" target="_blank" class="btn btn-outline-primary px-3 py-2 fw-semibold shadow-sm me-2">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Ver Página Pública
+                </a>
                 <button type="button" class="btn btn-brand px-3 py-2 fw-semibold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAddReview">
                     <i class="bi bi-plus-circle me-1"></i> Nueva Reseña
                 </button>

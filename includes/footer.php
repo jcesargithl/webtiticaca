@@ -72,6 +72,7 @@
                             <li><a href="about.html">Nosotros</a></li>
                             <li><a href="tours.html">Destinos</a></li>
                             <li><a href="blog.php">Blog</a></li>
+                            <li><a href="resenas.php">Reseñas</a></li>
                             <li><a href="contacto.html">Contacto</a></li>
                         </ul>
                     </div>

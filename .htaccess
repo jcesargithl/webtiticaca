@@ -14,6 +14,9 @@ DirectoryIndex index.php index.html
     # Redirigir galeria.html a galeria.php de forma transparente
     RewriteRule ^galeria\.html$ galeria.php [L,QSA]
 
+    # Redirigir resenas / reviews de forma transparente
+    RewriteRule ^(resenas|reviews)(\.html)?$ resenas.php [L,QSA]
+
     # Redirigir posts antiguos a la nueva plantilla dinámica
     RewriteRule ^post1\.html$ post.php?slug=la-observacion-de-aves-una-actividad-fascinante [L,QSA]
     RewriteRule ^post2\.html$ post.php?slug=puno-remo-parado-en-tabla-el-nuevo-deporte-del-titicaca [L,QSA]
