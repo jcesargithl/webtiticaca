@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <g id="alpaca-textile-motif">
+    <!-- Teal Solar Halo Ring behind Alpaca -->
+    <circle cx="200" cy="92" r="56" fill="none" stroke="#2095ae" stroke-width="4" stroke-dasharray="8 4" opacity="0.4" />
+
+    <!-- Alpaca / Llama Body Silhouette in Deep Navy -->
+    <!-- Head, Neck, Back, Tail, Legs -->
+    <path d="M 164 52
+             C 166 44, 176 38, 186 40
+             C 192 42, 194 50, 190 58
+             L 190 88
+             C 190 96, 196 102, 210 102
+             L 232 102
+             C 244 102, 250 110, 252 122
+             L 256 116
+             C 260 118, 260 126, 254 130
+             L 250 160
+             L 240 160
+             L 242 136
+             L 226 136
+             L 224 160
+             L 214 160
+             L 216 126
+             C 204 126, 192 124, 186 122
+             L 186 160
+             L 176 160
+             L 178 130
+             L 168 160
+             L 158 160
+             L 162 116
+             C 162 94, 166 80, 166 64
+             Z" fill="#0f2454" />
+
+    <!-- Ears & Tuft -->
+    <!-- Left Ear -->
+    <path d="M 178 42 L 180 28 L 186 40 Z" fill="#0f2454" />
+    <path d="M 180 41 L 181 32 L 184 40 Z" fill="#2095ae" />
+    <!-- Right Ear -->
+    <path d="M 172 44 L 170 30 L 176 42 Z" fill="#0f2454" />
+    
+    <!-- Traditional Ear Tassels (Cintas de oreja ceremoniales) in Teal -->
+    <path d="M 170 36 C 164 40, 162 50, 166 56" fill="none" stroke="#2095ae" stroke-width="3" stroke-linecap="round" />
+    <circle cx="166" cy="58" r="3" fill="#2095ae" />
+
+    <!-- Eye in White -->
+    <circle cx="184" cy="48" r="2.5" fill="#ffffff" />
+    <circle cx="183.5" cy="48" r="1.2" fill="#0f2454" />
+
+    <!-- Ornate Textile Blanket / Saddle (Manto Textil / Chumpi) -->
+    <!-- Outer Blanket Container -->
+    <rect x="188" y="102" width="48" height="28" fill="#2095ae" rx="2" />
+    <rect x="191" y="105" width="42" height="22" fill="#ffffff" rx="1" />
+    <rect x="193" y="107" width="38" height="18" fill="#0f2454" rx="1" />
+
+    <!-- Geometric Stepped Rhombuses inside blanket (Taquile Tocapus) -->
+    <!-- Diamond 1 -->
+    <polygon points="200,109 206,116 200,123 194,116" fill="#2095ae" />
+    <circle cx="200" cy="116" r="2" fill="#ffffff" />
+    <!-- Diamond 2 -->
+    <polygon points="214,109 220,116 214,123 208,116" fill="#2095ae" />
+    <circle cx="214" cy="116" r="2" fill="#ffffff" />
+    <!-- Diamond 3 -->
+    <polygon points="226,111 230,116 226,121 222,116" fill="#2095ae" />
+
+    <!-- Blanket Fringe / Tassels (Flecos del Chumpi) -->
+    <line x1="190" y1="130" x2="190" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="196" y1="130" x2="196" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="202" y1="130" x2="202" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="208" y1="130" x2="208" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="214" y1="130" x2="214" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="220" y1="130" x2="220" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="226" y1="130" x2="226" y2="134" stroke="#2095ae" stroke-width="2" />
+    <line x1="232" y1="130" x2="232" y2="134" stroke="#2095ae" stroke-width="2" />
+
+    <!-- Stepped Andean Ground Platform (Andén Incaico) -->
+    <polygon points="132,166 278,166 270,160 140,160" fill="#0f2454" />
+    <polygon points="144,164 266,164 262,162 148,162" fill="#2095ae" />
+  </g>
+</svg>

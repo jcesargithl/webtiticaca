@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <g id="condor-motif">
+    <!-- Teal Solar Arc behind Condor -->
+    <path d="M 140 110 A 66 66 0 0 1 260 110" fill="none" stroke="#2095ae" stroke-width="6" stroke-linecap="round" />
+    <path d="M 150 106 A 54 54 0 0 1 250 106" fill="none" stroke="#ffffff" stroke-width="2" />
+
+    <!-- Symmetrical Geometric Stepped Wings of the Condor -->
+    <!-- LEFT WING -->
+    <!-- Primary Flight Feathers in Navy (Stepped tiers) -->
+    <path d="M 182 88
+             L 160 52 L 146 52
+             L 132 66 L 116 66
+             L 104 82 L 96 98
+             L 112 100 L 112 108
+             L 128 108 L 128 116
+             L 146 116 L 146 122
+             L 164 122 L 182 118
+             Z" fill="#0f2454" />
+             
+    <!-- Inner Wing Coverts in Teal (Stepped Geometry) -->
+    <path d="M 182 92
+             L 164 62 L 154 62
+             L 142 74 L 130 74
+             L 122 88
+             L 132 96 L 132 104
+             L 148 104 L 148 110
+             L 164 110 L 182 110
+             Z" fill="#2095ae" />
+             
+    <!-- Wing White Geometric Inlay Lines -->
+    <polygon points="172,80 156,80 162,90 176,90" fill="#ffffff" />
+    <polygon points="158,94 144,94 150,102 164,102" fill="#ffffff" />
+
+    <!-- RIGHT WING (Perfect Symmetry) -->
+    <!-- Primary Flight Feathers in Navy -->
+    <path d="M 218 88
+             L 240 52 L 254 52
+             L 268 66 L 284 66
+             L 296 82 L 304 98
+             L 288 100 L 288 108
+             L 272 108 L 272 116
+             L 254 116 L 254 122
+             L 236 122 L 218 118
+             Z" fill="#0f2454" />
+             
+    <!-- Inner Wing Coverts in Teal -->
+    <path d="M 218 92
+             L 236 62 L 246 62
+             L 258 74 L 270 74
+             L 278 88
+             L 268 96 L 268 104
+             L 252 104 L 252 110
+             L 236 110 L 218 110
+             Z" fill="#2095ae" />
+             
+    <!-- Wing White Geometric Inlay Lines -->
+    <polygon points="228,80 244,80 238,90 224,90" fill="#ffffff" />
+    <polygon points="242,94 256,94 250,102 236,102" fill="#ffffff" />
+
+    <!-- Central Body & Tail in Navy -->
+    <!-- Tail (Stepped Inverted Pyramid / Chakana Tail) -->
+    <polygon points="184,120 216,120
+                     222,134 214,134
+                     214,146 206,146
+                     206,158 194,158
+                     194,146 186,146
+                     186,134 178,134" fill="#0f2454" />
+                     
+    <!-- Teal Tail Center Inlay -->
+    <polygon points="192,124 208,124
+                     208,136 204,136
+                     204,148 196,148
+                     196,136 192,136" fill="#2095ae" />
+    <circle cx="200" cy="130" r="3" fill="#ffffff" />
+
+    <!-- Condor Body Core -->
+    <ellipse cx="200" cy="102" rx="14" ry="20" fill="#0f2454" />
+    
+    <!-- White Andean Condor Feather Collar (Gola blanca) -->
+    <path d="M 188 84
+             Q 200 90 212 84
+             Q 200 78 188 84 Z" fill="#ffffff" />
+
+    <!-- Condor Head in Profile / Proud Upward Crest -->
+    <path d="M 194 82
+             C 192 72, 196 62, 206 56
+             C 214 54, 220 62, 222 68
+             C 224 70, 220 74, 214 76
+             C 208 78, 204 84, 204 86
+             Z" fill="#0f2454" />
+             
+    <!-- Condor Crest (Carúncula) in Teal -->
+    <path d="M 202 58
+             C 206 50, 216 50, 218 60
+             C 216 62, 208 60, 202 58 Z" fill="#2095ae" />
+             
+    <!-- Beak in Teal / Hook -->
+    <path d="M 218 66 L 228 72 L 216 74 Z" fill="#2095ae" />
+    
+    <!-- Eye in White -->
+    <circle cx="210" cy="66" r="2.5" fill="#ffffff" />
+    <circle cx="210.5" cy="66" r="1.2" fill="#0f2454" />
+  </g>
+</svg>

@@ -543,6 +543,12 @@ $recent_home_posts = get_recent_posts(3); // Solo los ultimos 3 posts
                         <div class="clients-logo">
                             <a href="#0"><img src="img/clients/4.png" alt=""></a>
                         </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/5.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/6.png" alt=""></a>
+                        </div>
                     </div>
                 </div>
             </div>

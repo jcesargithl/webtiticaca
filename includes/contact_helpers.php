@@ -2,14 +2,14 @@
 // includes/contact_helpers.php - Gestor de mensajes y reservas de respaldo
 
 /**
- * Retorna la ruta al archivo de almacenamiento JSON de mensajes.
+ * Retorna la ruta al archivo de almacenamiento JSON de mensajes y reservas.
  */
 function get_messages_file() {
     return __DIR__ . '/../data/messages.json';
 }
 
 /**
- * Obtiene todos los mensajes registrados.
+ * Obtiene todos los registros almacenados (contactos y reservas).
  * @return array
  */
 function get_all_messages() {
@@ -26,7 +26,7 @@ function get_all_messages() {
 }
 
 /**
- * Guarda una lista completa de mensajes.
+ * Guarda una lista completa de mensajes/reservas.
  * @param array $messages
  * @return bool
  */
@@ -41,29 +41,28 @@ function save_all_messages(array $messages) {
 }
 
 /**
- * Registra un nuevo mensaje (contacto o reserva).
+ * Registra un nuevo mensaje o solicitud de reserva.
  * @param array $entry
  * @return array|false
  */
 function save_message(array $entry) {
-    // Configurar zona horaria de Perú
     if (function_exists('date_default_timezone_set')) {
         @date_default_timezone_set('America/Lima');
     }
 
-    $id = uniqid('msg_', true);
+    $type = $entry['type'] ?? 'contacto';
+    $id = uniqid(($type === 'reserva' ? 'res_' : 'msg_'), true);
     $now = date('Y-m-d H:i:s');
 
     $record = array_merge([
         'id'         => $id,
-        'type'       => 'contacto',
+        'type'       => $type,
         'created_at' => $now,
-        'status'     => 'nuevo', // 'nuevo', 'leido', 'atendido'
+        'status'     => ($type === 'reserva' ? 'pendiente' : 'nuevo'), // 'pendiente'/'confirmada'/'cancelada' o 'nuevo'/'leido'
         'email_sent' => false
     ], $entry);
 
     $messages = get_all_messages();
-    // Añadir al inicio para que los más recientes aparezcan primero
     array_unshift($messages, $record);
 
     if (save_all_messages($messages)) {
@@ -73,9 +72,9 @@ function save_message(array $entry) {
 }
 
 /**
- * Actualiza el estado de un mensaje.
+ * Actualiza el estado de un registro.
  * @param string $id
- * @param string $status ('nuevo', 'leido', 'atendido')
+ * @param string $status
  * @return bool
  */
 function update_message_status($id, $status = 'leido') {
@@ -95,7 +94,7 @@ function update_message_status($id, $status = 'leido') {
 }
 
 /**
- * Elimina un mensaje por su ID.
+ * Elimina un registro por su ID.
  * @param string $id
  * @return bool
  */
@@ -112,16 +111,62 @@ function delete_message($id) {
 }
 
 /**
- * Retorna la cantidad de mensajes no leídos.
+ * Retorna solo las solicitudes de reserva de tours.
+ * @return array
+ */
+function get_tour_reservations() {
+    $all = get_all_messages();
+    return array_values(array_filter($all, function($m) {
+        return ($m['type'] ?? '') === 'reserva';
+    }));
+}
+
+/**
+ * Retorna solo los mensajes generales de contacto.
+ * @return array
+ */
+function get_contact_inquiries() {
+    $all = get_all_messages();
+    return array_values(array_filter($all, function($m) {
+        return ($m['type'] ?? 'contacto') === 'contacto';
+    }));
+}
+
+/**
+ * Retorna la cantidad de reservas pendientes de atención.
  * @return int
  */
-function get_unread_messages_count() {
-    $messages = get_all_messages();
+function get_unread_reservations_count() {
+    $reservations = get_tour_reservations();
     $count = 0;
-    foreach ($messages as $msg) {
-        if (($msg['status'] ?? 'nuevo') === 'nuevo') {
+    foreach ($reservations as $r) {
+        $st = $r['status'] ?? 'pendiente';
+        if ($st === 'pendiente' || $st === 'nuevo') {
             $count++;
         }
     }
     return $count;
+}
+
+/**
+ * Retorna la cantidad de mensajes de contacto no leídos.
+ * @return int
+ */
+function get_unread_contacts_count() {
+    $contacts = get_contact_inquiries();
+    $count = 0;
+    foreach ($contacts as $c) {
+        if (($c['status'] ?? 'nuevo') === 'nuevo') {
+            $count++;
+        }
+    }
+    return $count;
+}
+
+/**
+ * Retorna el total combinado de mensajes y reservas no atendidos.
+ * @return int
+ */
+function get_unread_messages_count() {
+    return get_unread_contacts_count() + get_unread_reservations_count();
 }

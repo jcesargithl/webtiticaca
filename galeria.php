@@ -213,6 +213,12 @@ $initial_show = 10; // Número de imágenes visibles inicialmente (2 ciclos comp
                         <div class="clients-logo">
                             <a href="#0"><img src="img/clients/4.png" alt=""></a>
                         </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/5.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/6.png" alt=""></a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -61,7 +61,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 }
 
 $all_messages = get_all_messages();
-$unread_count = get_unread_messages_count();
+$unread_count = get_unread_contacts_count();
+$unread_reservations = get_unread_reservations_count();
 
 // Estadísticas
 $total_count    = count($all_messages);
@@ -192,9 +193,17 @@ if (isset($_GET['msg']) && $_GET['msg'] === 'deleted') {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3 py-1 active bg-white text-dark fw-bold rounded" href="mensajes.php">
-                            <i class="bi bi-envelope me-1 text-primary"></i> Mensajes
+                            <i class="bi bi-chat-dots me-1 text-primary"></i> Contactos
                             <?php if ($unread_count > 0): ?>
-                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_count ?></span>
+                                <span class="badge bg-secondary rounded-pill ms-1"><?= $unread_count ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="reservas.php">
+                            <i class="bi bi-calendar-check me-1"></i> Reservas
+                            <?php if ($unread_reservations > 0): ?>
+                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_reservations ?></span>
                             <?php endif; ?>
                         </a>
                     </li>

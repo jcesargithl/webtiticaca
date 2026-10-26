@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <g id="balsa-totora-motif">
+    <!-- Teal Sun Disc in background -->
+    <circle cx="210" cy="80" r="38" fill="#2095ae" opacity="0.95" />
+    <circle cx="210" cy="80" r="30" fill="#ffffff" />
+    <circle cx="210" cy="80" r="22" fill="#2095ae" />
+    <circle cx="210" cy="80" r="12" fill="#ffffff" />
+
+    <!-- Woven Totora Triangular Sail in Navy with Textile stripes -->
+    <path d="M 208 42 
+             L 246 112 
+             Q 212 118 176 112 
+             Z" fill="#0f2454" />
+    
+    <!-- White / Teal Sail Textile Bands (Taquile style stripes) -->
+    <path d="M 206 60 L 226 112 Q 204 116 186 112 Z" fill="#2095ae" />
+    <path d="M 204 76 L 212 112 Q 200 114 194 112 Z" fill="#ffffff" />
+    
+    <!-- Mast in White / Navy -->
+    <rect x="206" y="40" width="3.5" height="74" fill="#ffffff" rx="1" />
+    <rect x="206.8" y="40" width="2" height="74" fill="#0f2454" />
+
+    <!-- Totora Reed Boat Hull with Puma Prow -->
+    <!-- The hull sweeps upward into the sacred feline/puma head at the left -->
+    <path d="M 114 98
+             C 104 118, 128 134, 170 136
+             C 220 136, 268 130, 288 108
+             C 284 118, 256 138, 206 140
+             C 156 140, 112 132, 104 112
+             C 102 102, 108 88, 114 98
+             Z" fill="#0f2454" />
+             
+    <!-- Realistic Stylized Balsa Hull Solid Structure -->
+    <path d="M 116 110
+             C 150 136, 230 136, 284 112
+             C 288 122, 240 142, 190 142
+             C 144 142, 114 128, 116 110
+             Z" fill="#0f2454" />
+             
+    <!-- Upper Hull Bundle (Totora reed roll) in Teal -->
+    <path d="M 120 108
+             C 160 126, 230 126, 278 110
+             C 270 118, 224 130, 180 130
+             C 146 130, 124 120, 120 108
+             Z" fill="#2095ae" />
+
+    <!-- Puma Head Prow on the Left (Traditional Lake Titicaca Uros Bow) -->
+    <!-- Puma Neck & Head -->
+    <path d="M 122 114
+             C 116 104, 112 90, 118 76
+             C 122 70, 132 70, 136 78
+             C 140 84, 136 92, 134 108
+             Z" fill="#0f2454" />
+    <!-- Puma Ear -->
+    <polygon points="122,74 126,64 130,74" fill="#0f2454" />
+    <polygon points="124,73 126,67 128,73" fill="#2095ae" />
+    <!-- Puma Snout / Whiskers / Eye -->
+    <circle cx="124" cy="80" r="3" fill="#ffffff" />
+    <circle cx="123" cy="80" r="1.5" fill="#0f2454" />
+    <path d="M 116 84 L 122 86 L 116 88" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Stepped Andean Wave Patterns Beneath (Olas Textiles del Titicaca) -->
+    <!-- Wave 1: Navy Stepped Waves -->
+    <path d="M 104 148
+             L 120 148 L 120 142 L 136 142
+             L 136 148 L 152 148 L 152 142
+             L 168 142 L 168 148 L 184 148
+             L 184 142 L 200 142 L 200 148
+             L 216 148 L 216 142 L 232 142
+             L 232 148 L 248 148 L 248 142
+             L 264 142 L 264 148 L 280 148
+             L 280 142 L 296 142 L 296 152
+             L 104 152 Z" fill="#0f2454" />
+             
+    <!-- Wave 2: Vibrant Teal Curving Wave Crests -->
+    <path d="M 104 156
+             Q 120 148 136 156
+             Q 152 148 168 156
+             Q 184 148 200 156
+             Q 216 148 232 156
+             Q 248 148 264 156
+             Q 280 148 296 156
+             L 296 163
+             L 104 163 Z" fill="#2095ae" />
+  </g>
+</svg>

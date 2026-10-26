@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <g id="inti-sun-motif">
+    <!-- 8 Stepped Rays radiating from Center -->
+    <!-- CARDINAL RAYS (North, South, East, West) - Stepped Chakana Style in Navy -->
+    <!-- Top Ray -->
+    <polygon points="190,64 210,64 
+                     210,52 206,52 
+                     206,40 194,40 
+                     194,52 190,52" fill="#0f2454" />
+    <rect x="197" y="44" width="6" height="6" fill="#2095ae" />
+
+    <!-- Bottom Ray -->
+    <polygon points="190,136 210,136 
+                     210,148 206,148 
+                     206,160 194,160 
+                     194,148 190,148" fill="#0f2454" />
+    <rect x="197" y="150" width="6" height="6" fill="#2095ae" />
+
+    <!-- Right Ray -->
+    <polygon points="236,90 236,110 
+                     248,110 248,106 
+                     260,106 260,94 
+                     248,94 248,90" fill="#0f2454" />
+    <rect x="250" y="97" width="6" height="6" fill="#2095ae" />
+
+    <!-- Left Ray -->
+    <polygon points="164,90 164,110 
+                     152,110 152,106 
+                     140,106 140,94 
+                     152,94 152,90" fill="#0f2454" />
+    <rect x="144" y="97" width="6" height="6" fill="#2095ae" />
+
+    <!-- DIAGONAL RAYS (NE, SE, SW, NW) - Flame / Arrowheads in Teal -->
+    <!-- North East -->
+    <polygon points="220,72 228,80 246,62 238,54" fill="#2095ae" />
+    <polygon points="238,54 246,62 254,54" fill="#0f2454" />
+
+    <!-- South East -->
+    <polygon points="220,128 228,120 246,138 238,146" fill="#2095ae" />
+    <polygon points="238,146 246,138 254,146" fill="#0f2454" />
+
+    <!-- South West -->
+    <polygon points="180,128 172,120 154,138 162,146" fill="#2095ae" />
+    <polygon points="162,146 154,138 146,146" fill="#0f2454" />
+
+    <!-- North West -->
+    <polygon points="180,72 172,80 154,62 162,54" fill="#2095ae" />
+    <polygon points="162,54 154,62 146,54" fill="#0f2454" />
+
+    <!-- Outer Solar Disc in Navy -->
+    <circle cx="200" cy="100" r="36" fill="#0f2454" />
+    <circle cx="200" cy="100" r="32" fill="#ffffff" />
+    
+    <!-- Textile Sawtooth Ring (Dientes de Sierra Andinos) in Teal -->
+    <circle cx="200" cy="100" r="30" fill="#2095ae" />
+    <circle cx="200" cy="100" r="24" fill="#0f2454" />
+
+    <!-- Face of Inti (Tiwanaku / Puerta del Sol style) -->
+    <!-- Golden / Teal Brow & Eyes -->
+    <!-- Left Eye -->
+    <rect x="186" y="90" width="9" height="7" fill="#ffffff" rx="1" />
+    <circle cx="190.5" cy="93.5" r="2" fill="#2095ae" />
+    <line x1="190.5" y1="97" x2="190.5" y2="104" stroke="#2095ae" stroke-width="2" />
+    <circle cx="190.5" cy="105" r="1.5" fill="#ffffff" />
+
+    <!-- Right Eye -->
+    <rect x="205" y="90" width="9" height="7" fill="#ffffff" rx="1" />
+    <circle cx="209.5" cy="93.5" r="2" fill="#2095ae" />
+    <line x1="209.5" y1="97" x2="209.5" y2="104" stroke="#2095ae" stroke-width="2" />
+    <circle cx="209.5" cy="105" r="1.5" fill="#ffffff" />
+
+    <!-- Nose (T-shaped Andean nose) -->
+    <polygon points="197,88 203,88 203,98 205,102 195,102 197,98" fill="#ffffff" />
+
+    <!-- Mouth (Geometric Inca Smile) -->
+    <rect x="192" y="109" width="16" height="5" fill="#ffffff" rx="1" />
+    <rect x="194" y="110.5" width="12" height="2" fill="#0f2454" />
+
+    <!-- Forehead Solar Crown Emblem -->
+    <polygon points="200,78 205,84 195,84" fill="#2095ae" />
+    <circle cx="200" cy="85" r="2" fill="#ffffff" />
+  </g>
+</svg>

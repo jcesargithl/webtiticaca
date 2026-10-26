@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <g id="tocapu-taquile-motif">
+    <!-- Diamond Medallion Container (Rombo Textil Andino) -->
+    <polygon points="200,36 280,100 200,164 120,100" fill="#0f2454" />
+    <polygon points="200,43 272,100 200,157 128,100" fill="#ffffff" />
+    <polygon points="200,48 266,100 200,152 134,100" fill="#2095ae" />
+    
+    <!-- 4 Cardinal Stepped Corners (Grecas de Taquile) -->
+    <!-- Top Step Corner -->
+    <polygon points="186,54 214,54 200,66" fill="#ffffff" />
+    <polygon points="192,54 208,54 200,62" fill="#0f2454" />
+
+    <!-- Bottom Step Corner -->
+    <polygon points="186,146 214,146 200,134" fill="#ffffff" />
+    <polygon points="192,146 208,146 200,138" fill="#0f2454" />
+
+    <!-- Left Step Corner -->
+    <polygon points="142,100 156,88 156,112" fill="#ffffff" />
+    <polygon points="146,100 156,92 156,108" fill="#0f2454" />
+
+    <!-- Right Step Corner -->
+    <polygon points="258,100 244,88 244,112" fill="#ffffff" />
+    <polygon points="254,100 244,92 244,108" fill="#0f2454" />
+
+    <!-- Central Navy Diamond Block -->
+    <polygon points="200,66 244,100 200,134 156,100" fill="#0f2454" />
+    <polygon points="200,72 236,100 200,128 164,100" fill="#ffffff" />
+    <polygon points="200,76 231,100 200,124 169,100" fill="#0f2454" />
+
+    <!-- Taquile Sacred Cocha (Water Spiral / Concentric Stepped Core) -->
+    <!-- 4 Quadrant Tocapus -->
+    <!-- Top Quadrant Triangle -->
+    <polygon points="200,82 214,94 186,94" fill="#2095ae" />
+    <circle cx="200" cy="90" r="2" fill="#ffffff" />
+
+    <!-- Bottom Quadrant Triangle -->
+    <polygon points="200,118 214,106 186,106" fill="#2095ae" />
+    <circle cx="200" cy="110" r="2" fill="#ffffff" />
+
+    <!-- Left Quadrant Triangle -->
+    <polygon points="182,100 194,88 194,112" fill="#2095ae" />
+    <circle cx="190" cy="100" r="2" fill="#ffffff" />
+
+    <!-- Right Quadrant Triangle -->
+    <polygon points="218,100 206,88 206,112" fill="#2095ae" />
+    <circle cx="210" cy="100" r="2" fill="#ffffff" />
+
+    <!-- Center Solar Aperture -->
+    <circle cx="200" cy="100" r="5" fill="#ffffff" />
+    <circle cx="200" cy="100" r="2.5" fill="#0f2454" />
+  </g>
+</svg>
