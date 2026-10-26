@@ -110,7 +110,7 @@ $author_name = !empty($post['author']) ? $post['author'] : 'Ernesto Aliaga';
                         <div class="mt-30 pt-20" style="border-top: 1px solid #eef2f5;">
                             <span class="text-muted me-2" style="font-weight: 600;"><i class="ti-tag"></i> Etiquetas:</span>
                             <?php foreach ($post_tags as $t): ?>
-                                <a href="blog.php?tag=<?= urlencode($t) ?>" class="badge bg-light text-dark me-1 p-2" style="font-size: 13px; text-decoration: none; border: 1px solid #d7ebf0;">
+                                <a href="blog.php?tag=<?= urlencode($t) ?>" class="badge bg-light text-dark rounded-0 me-1 p-2" style="font-size: 13px; text-decoration: none; border: 1px solid #d7ebf0; border-radius: 0;">
                                     <?= htmlspecialchars($t) ?>
                                 </a>
                             <?php endforeach; ?>
