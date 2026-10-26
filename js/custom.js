@@ -730,53 +730,63 @@ $(function () {
         var $slide2 = $fader.find('.about-slide-2');
 
         var playlist = shuffleArray(tourSlides);
+        // Avoid repeating Canoas immediately if about2.jpg is already active
+        if (playlist.length > 1 && playlist[0].img.indexOf('tourcanoas') !== -1) {
+            playlist.push(playlist.shift());
+        }
+
         var currentIndex = 0;
         var isPaused = false;
+        var isTransitioning = false;
         var intervalMs = 5500;
         var activeIsSlide1 = true;
 
-        // Initialize with first random tour
-        var initialTour = playlist[0];
-        $slide1.attr('src', initialTour.img).attr('alt', initialTour.title).addClass('active');
-        $link.attr('href', initialTour.link);
-        $title.text(initialTour.title);
+        // Ensure initial slide is active
+        $slide1.addClass('active');
 
         function showNextTour() {
-            if (isPaused) return;
-
-            var currentTour = playlist[currentIndex];
-            currentIndex++;
-            if (currentIndex >= playlist.length) {
-                playlist = shuffleArray(tourSlides);
-                if (playlist.length > 1 && playlist[0].img === currentTour.img) {
-                    var swap = playlist.shift();
-                    playlist.push(swap);
-                }
-                currentIndex = 0;
-            }
+            if (isPaused || isTransitioning) return;
 
             var nextTour = playlist[currentIndex];
-            var $front = activeIsSlide1 ? $slide1 : $slide2;
-            var $back = activeIsSlide1 ? $slide2 : $slide1;
+            currentIndex = (currentIndex + 1) % playlist.length;
+            if (currentIndex === 0) {
+                playlist = shuffleArray(tourSlides);
+            }
 
-            // Fade badge slightly during transition
-            $badge.css({ 'opacity': 0, 'transform': 'translateY(6px)' });
+            isTransitioning = true;
 
-            // Prepare back image
-            $back.attr('src', nextTour.img).attr('alt', nextTour.title);
+            // Guarantee image is fully loaded in memory BEFORE starting transition
+            var loader = new Image();
+            loader.onload = function () {
+                var $front = activeIsSlide1 ? $slide1 : $slide2;
+                var $back = activeIsSlide1 ? $slide2 : $slide1;
 
-            setTimeout(function () {
-                $link.attr('href', nextTour.link);
-                $title.text(nextTour.title);
-                $badge.css({ 'opacity': 1, 'transform': 'translateY(0)' });
+                // Set image on the back slide
+                $back.attr('src', nextTour.img).attr('alt', nextTour.title);
 
-                $back.css('z-index', 2).addClass('active');
+                // Fade badge slightly during sync
+                $badge.css({ 'opacity': 0, 'transform': 'translateY(4px)' });
 
                 setTimeout(function () {
-                    $front.removeClass('active').css('z-index', 1);
-                    activeIsSlide1 = !activeIsSlide1;
-                }, 1450);
-            }, 60);
+                    $link.attr('href', nextTour.link);
+                    $title.text(nextTour.title);
+                    $badge.css({ 'opacity': 1, 'transform': 'translateY(0)' });
+
+                    $back.css('z-index', 2).addClass('active');
+
+                    setTimeout(function () {
+                        $front.removeClass('active').css('z-index', 1);
+                        activeIsSlide1 = !activeIsSlide1;
+                        isTransitioning = false;
+                    }, 1450);
+                }, 80);
+            };
+
+            loader.onerror = function () {
+                isTransitioning = false;
+            };
+
+            loader.src = nextTour.img;
         }
 
         var timer = setInterval(showNextTour, intervalMs);
