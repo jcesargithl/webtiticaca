@@ -125,27 +125,20 @@ $recent_home_posts = get_recent_posts(3); // Solo los ultimos 3 posts
                         <strong style="color: #2095AE; font-size: 18px; font-weight: 700; display: block; margin-bottom: 6px;">Visión:</strong>
                         Para el año 2027, ser una agencia referente en turismo de naturaleza sostenible en el sur del Perú, reconocida por su compromiso con la conservación ambiental, la responsabilidad social y la mejora continua de su gestión sostenible.
                     </p>
-                    <ul class="list-unstyled about-list mb-30">
-                        <li>
+                    <ul class="list-unstyled about-list d-flex flex-wrap align-items-center mb-30" style="gap: 15px 30px;">
+                        <li style="margin-top: 0;">
                             <div class="about-list-icon"> <span class="ti-check"></span> </div>
                             <div class="about-list-text">
                                 <p>6 años de experiencias</p>
                             </div>
                         </li>
-                        <li>
+                        <li style="margin-top: 0;">
                             <div class="about-list-icon"> <span class="ti-check"></span> </div>
                             <div class="about-list-text">
                                 <p>40+ Destinos turísticos</p>
                             </div>
                         </li>
                     </ul>
-                    <!-- Info -->
-                    <div class="phone-call mb-30">
-                        <div class="icon"><span class="flaticon-phone-call"></span></div>
-                        <div class="text">
-                            <p>Información</p> <a href="tel:51950766721">+51 950766721 </a>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-5 offset-md-1 animate-box" data-animate-effect="fadeInUp">
                     <div class="img-exp">
