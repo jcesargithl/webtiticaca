@@ -404,6 +404,42 @@ $(function () {
             }
         }
     });
+
+    // Footer Trust Carousel (de 3 en 3)
+    if ($('.footer-trust-carousel').length) {
+        $('.footer-trust-carousel').owlCarousel({
+            loop: true,
+            margin: 15,
+            items: 3,
+            slideBy: 3,
+            mouseDrag: true,
+            touchDrag: true,
+            autoplay: true,
+            autoplayTimeout: 3500,
+            autoplayHoverPause: true,
+            smartSpeed: 500,
+            dots: false,
+            nav: false,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 3,
+                    slideBy: 3,
+                    margin: 10
+                },
+                600: {
+                    items: 3,
+                    slideBy: 3,
+                    margin: 12
+                },
+                1000: {
+                    items: 3,
+                    slideBy: 3,
+                    margin: 15
+                }
+            }
+        });
+    }
     
     // Accordion Box (for Faqs)
     if ($(".accordion-box").length) {

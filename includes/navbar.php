@@ -55,7 +55,7 @@ $current_script = basename($_SERVER['PHP_SELF'] ?? '');
                                     </ul>
                                 </li>
 
-                                <li><a href="tour-aves.html" class="dropdown-item"><span>Observación de aves</span></a></li>
+                                <li><a href="tour-aves-puno.html" class="dropdown-item"><span>Observación de aves (Puno)</span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu dropdown"> <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" href="#"><span>Bolivia <i class="ti-angle-right"></i></span></a>
