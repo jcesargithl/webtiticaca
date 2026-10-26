@@ -684,3 +684,108 @@ var form = $('.contact__form'),
             submitBtn.prop('disabled', false);
         });
     });
+
+// About Section - Dynamic Tour Slideshow (Ken Burns + Crossfade)
+$(function () {
+    var $faders = $('.about-fader');
+    if (!$faders.length) return;
+
+    var tourSlides = [
+        { img: 'img/slider/tourcanoas/max3.jpg', link: 'tour-canoas.html', title: 'Canoas Polinésicas' },
+        { img: 'img/slider/touramantani/slide1.jpg', link: 'tour-amantani.html', title: 'Isla Amantaní' },
+        { img: 'img/slider/toururos/max3.jpg', link: 'tour-uros.html', title: 'Islas de los Uros' },
+        { img: 'img/slider/tourtaquile/slide1.jpg', link: 'tour-taquile.html', title: 'Isla Taquile' },
+        { img: 'img/slider/toursillustani/max4.jpg', link: 'tour-sillustani.html', title: 'Chullpas de Sillustani' },
+        { img: 'img/tours/touravespuno/AAG_1879_max.jpg', link: 'tour-aves-puno.html', title: 'Observación de Aves' },
+        { img: 'img/slider/touraymara/max1.jpg', link: 'tour-ruta-aymara.html', title: 'Ruta Aymara' },
+        { img: 'img/slider/tourquechua/slide.jpg', link: 'tour-ruta-quechua.html', title: 'Ruta Quechua' },
+        { img: 'img/tours/tourcusco/max1.jpg', link: 'tour-cusco.html', title: 'Paquete Cusco' },
+        { img: 'img/tours/tourbolivia/max3.jpg', link: 'tour-bolivia.html', title: 'Paquete Bolivia' }
+    ];
+
+    // Preload images into memory for smooth playback
+    tourSlides.forEach(function (tour) {
+        var preloader = new Image();
+        preloader.src = tour.img;
+    });
+
+    // Fisher-Yates shuffle
+    function shuffleArray(arr) {
+        var copy = arr.slice();
+        for (var i = copy.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = copy[i];
+            copy[i] = copy[j];
+            copy[j] = temp;
+        }
+        return copy;
+    }
+
+    $faders.each(function () {
+        var $fader = $(this);
+        var $link = $fader.closest('.about-tour-link');
+        var $badge = $fader.find('.about-tour-badge');
+        var $title = $fader.find('.about-tour-title');
+        var $slide1 = $fader.find('.about-slide-1');
+        var $slide2 = $fader.find('.about-slide-2');
+
+        var playlist = shuffleArray(tourSlides);
+        var currentIndex = 0;
+        var isPaused = false;
+        var intervalMs = 5500;
+        var activeIsSlide1 = true;
+
+        // Initialize with first random tour
+        var initialTour = playlist[0];
+        $slide1.attr('src', initialTour.img).attr('alt', initialTour.title).addClass('active');
+        $link.attr('href', initialTour.link);
+        $title.text(initialTour.title);
+
+        function showNextTour() {
+            if (isPaused) return;
+
+            var currentTour = playlist[currentIndex];
+            currentIndex++;
+            if (currentIndex >= playlist.length) {
+                playlist = shuffleArray(tourSlides);
+                if (playlist.length > 1 && playlist[0].img === currentTour.img) {
+                    var swap = playlist.shift();
+                    playlist.push(swap);
+                }
+                currentIndex = 0;
+            }
+
+            var nextTour = playlist[currentIndex];
+            var $front = activeIsSlide1 ? $slide1 : $slide2;
+            var $back = activeIsSlide1 ? $slide2 : $slide1;
+
+            // Fade badge slightly during transition
+            $badge.css({ 'opacity': 0, 'transform': 'translateY(6px)' });
+
+            // Prepare back image
+            $back.attr('src', nextTour.img).attr('alt', nextTour.title);
+
+            setTimeout(function () {
+                $link.attr('href', nextTour.link);
+                $title.text(nextTour.title);
+                $badge.css({ 'opacity': 1, 'transform': 'translateY(0)' });
+
+                $back.css('z-index', 2).addClass('active');
+
+                setTimeout(function () {
+                    $front.removeClass('active').css('z-index', 1);
+                    activeIsSlide1 = !activeIsSlide1;
+                }, 1450);
+            }, 60);
+        }
+
+        var timer = setInterval(showNextTour, intervalMs);
+
+        // Pause on hover so visitor can admire photo and click
+        $link.on('mouseenter', function () {
+            isPaused = true;
+        }).on('mouseleave', function () {
+            isPaused = false;
+        });
+    });
+});
