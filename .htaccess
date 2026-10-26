@@ -1,7 +1,12 @@
 # Habilitar motor de reescritura
+DirectoryIndex index.php index.html
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
+
+    # Redirigir index.html a index.php de forma transparente
+    RewriteRule ^index\.html$ index.php [L,QSA]
 
     # Redirigir blog.html a blog.php de forma transparente
     RewriteRule ^blog\.html$ blog.php [L,QSA]
