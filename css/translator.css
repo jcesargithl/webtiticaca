@@ -1,0 +1,221 @@
+/* ==========================================================================
+   TRANSLATOR COMPONENT (Estilo Appstorrent.ru)
+   ========================================================================== */
+
+/* Contenedor principal del botón en el navbar */
+.guest-language {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding: 6px 14px;
+    margin-left: 18px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.guest-language:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.38);
+}
+
+/* Estado cuando la navbar hace scroll y se vuelve blanca */
+.nav-scroll .guest-language {
+    background: #f4f6f9;
+    border: 1px solid #e2e8f0;
+    color: #0f2454;
+}
+
+.nav-scroll .guest-language:hover {
+    background: #e9ecef;
+    border-color: #cbd5e1;
+}
+
+/* Icono de globo terráqueo */
+.guest-language-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.guest-language-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    transition: stroke 0.3s ease;
+}
+
+/* Etiqueta de texto (Es, En, Fr, De, etc.) */
+.guest-language .langHeader {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    color: currentColor;
+    text-transform: capitalize;
+}
+
+/* Flechita indicadora opcional */
+.guest-language .lang-arrow {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    margin-left: 2px;
+    margin-top: -3px;
+    opacity: 0.7;
+    transition: transform 0.25s ease, margin-top 0.25s ease;
+}
+
+.guest-language.open .lang-arrow {
+    transform: rotate(-135deg);
+    margin-top: 2px;
+}
+
+/* Menú flotante (tarjeta limpia con sombra) */
+.dropdown-lang-content {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 170px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 99999;
+    animation: langMenuFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dropdown-lang-content.show {
+    display: block;
+}
+
+@keyframes langMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Elementos de la lista de idiomas */
+.dropdown-lang-content a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b !important;
+    text-decoration: none !important;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dropdown-lang-content a:hover {
+    background-color: #f1f5f9;
+    color: #2095AE !important;
+}
+
+/* Idioma actualmente seleccionado */
+.dropdown-lang-content a.language__active {
+    background-color: #e0f2fe;
+    color: #0284c7 !important;
+    font-weight: 600;
+}
+
+.dropdown-lang-content a.language__active::after {
+    content: "✓";
+    font-size: 13px;
+    font-weight: bold;
+    color: #0284c7;
+    margin-left: 8px;
+}
+
+/* Adaptación responsive en pantallas móviles */
+@media screen and (max-width: 767px) {
+    .guest-language {
+        margin-left: auto;
+        margin-right: 12px;
+        order: 2;
+        padding: 5px 10px;
+        height: 34px;
+    }
+    
+    .navbar-toggler {
+        order: 3;
+    }
+
+    .dropdown-lang-content {
+        right: 0;
+        left: auto;
+        min-width: 155px;
+    }
+}
+
+/* ==========================================================================
+   Ocultamiento de elementos invasivos de Google Translate
+   ========================================================================== */
+/* Ocultar barra superior / toolbar iframe en todos los navegadores (Safari, Chrome, etc.) */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+iframe.skiptranslate,
+iframe[id*=":1.container"],
+iframe[id*=":2.container"],
+iframe[src*="translate.google"],
+[class*="VIpgJd-ZVi9od-ORHb-OEVmcd"],
+[class*="VIpgJd-ZVi9od-aZ2wEe-wOHMyf"],
+[class*="VIpgJd"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    border: none !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* Evitar que Google baje el body 40px */
+html, body {
+    top: 0px !important;
+    position: static !important;
+    margin-top: 0px !important;
+}
+
+#goog-gt-tt, 
+.goog-te-balloon-frame {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+#google_translate_element,
+.goog-te-gadget {
+    display: none !important;
+}

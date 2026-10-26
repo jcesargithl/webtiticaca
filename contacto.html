@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="css/plugins.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/translator.css" />
 </head>
 <body>
     <!-- Preloader -->
@@ -43,8 +44,8 @@
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
 
          
-
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Destinos <i class="ti-angle-down"></i></a>
+                    
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">+ Destinos <i class="ti-angle-down"></i></a>
                         <ul class="dropdown-menu">
                            
 
@@ -61,7 +62,10 @@
                                 <ul class="dropdown-menu">
                                     <li class="dropdown-submenu dropdown"> <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" href="#"><span>Diarios <i class="ti-angle-right"></i></span></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="tour-taquile.html" class="dropdown-item"><span>Taquile</span></a></li>
+                                            <li><a href="tour-taquile-day.html" class="dropdown-item"><span>Taquile (Full Day) </span></a></li>
+
+                                            <li><a href="tour-taquile.html" class="dropdown-item"><span>Taquile (2 días)</span></a></li>
+
                                             <li><a href="tour-amantani.html" class="dropdown-item"><span>Amantani</span></a></li>
                                             <li><a href="tour-ruta-aymara.html" class="dropdown-item"><span>Ruta Aymara</span></a></li>
                                             <li><a href="tour-ruta-quechua.html" class="dropdown-item"><span>Ruta Quechua</span></a></li>
@@ -115,8 +119,6 @@
              
                         </ul>
                     </li>
-                    
-
 
 
                     <li class="nav-item"><a class="nav-link" href="about.html">Nosotros</a></li>
@@ -129,7 +131,31 @@
 
              
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                
+               
+                    
                 </ul>
+            </div>
+
+            <div class="lang guest-language" id="lang_min">
+                <i class="guest-language-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </i>
+                <span class="langHeader" id="lang">Es</span>
+                <span class="lang-arrow"></span>
+                <div class="dropdown-lang-content" id="langDropdown">
+                    <a role="button" data-google-lang="es">Español</a>
+                    <a role="button" data-google-lang="en">English</a>
+                    <a role="button" data-google-lang="fr">Français</a>
+                    <a role="button" data-google-lang="de">Deutsch</a>
+                    <a role="button" data-google-lang="pt">Português</a>
+                    <a role="button" data-google-lang="it">Italiano</a>
+                    <a role="button" data-google-lang="zh-CN">中文</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -448,6 +474,8 @@
     <script src="js/custom.js"></script>
 
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- Translator Engine -->
+    <script src="js/translator.js"></script>
 </body>
 
 
