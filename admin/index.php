@@ -159,12 +159,9 @@ $unread_reservations = $is_logged ? get_unread_reservations_count() : 0;
                         </a>
                     </li>
                 </ul>
-                                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
                     <a href="backup.php" class="btn btn-sm btn-success fw-semibold shadow-sm" title="Descargar copia de seguridad completa (.zip)">
                         <i class="bi bi-cloud-arrow-down-fill me-1"></i> Copia de Seguridad
-                    </a>
-                    <a href="../galeria.php" target="_blank" class="btn btn-sm btn-outline-light">
-                        <i class="bi bi-eye me-1"></i> Ver Galería en Vivo
                     </a>
                     <a href="../blog.php" target="_blank" class="btn btn-sm btn-outline-light">
                         <i class="bi bi-box-arrow-up-right me-1"></i> Ver Blog en Vivo

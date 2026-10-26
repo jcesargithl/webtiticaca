@@ -10,7 +10,8 @@ require_once __DIR__ . '/../includes/contact_helpers.php';
 require_admin_login();
 
 $reviews = get_all_reviews(false);
-$unread_count = get_unread_messages_count();
+$unread_count = get_unread_contacts_count();
+$unread_reservations = get_unread_reservations_count();
 $message = '';
 $error_message = '';
 
@@ -203,19 +204,27 @@ $default_avatars = [
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3 py-1 text-white-50" href="mensajes.php">
-                            <i class="bi bi-envelope me-1"></i> Mensajes
+                            <i class="bi bi-chat-dots me-1"></i> Contactos
                             <?php if ($unread_count > 0): ?>
-                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_count ?></span>
+                                <span class="badge bg-secondary rounded-pill ms-1"><?= $unread_count ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="reservas.php">
+                            <i class="bi bi-calendar-check me-1"></i> Reservas
+                            <?php if ($unread_reservations > 0): ?>
+                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_reservations ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
                 </ul>
-                                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
                     <a href="backup.php" class="btn btn-sm btn-success fw-semibold shadow-sm" title="Descargar copia de seguridad completa (.zip)">
                         <i class="bi bi-cloud-arrow-down-fill me-1"></i> Copia de Seguridad
                     </a>
-                    <a href="../index.html" target="_blank" class="btn btn-sm btn-outline-light">
-                        <i class="bi bi-eye me-1"></i> Ver Sitio en Vivo
+                    <a href="../resenas.php" target="_blank" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-eye me-1"></i> Ver Reseñas en Vivo
                     </a>
                     <a href="logout.php" class="btn btn-sm btn-light text-danger">
                         <i class="bi bi-power"></i> Salir
