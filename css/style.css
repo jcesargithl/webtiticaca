@@ -3417,6 +3417,52 @@ button.mfp-arrow {
     border-color: #4285F4;
     color: #1a73e8;
 }
+.tripadvisor-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    background: #eefaf4;
+    color: #004f32;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 6px;
+    vertical-align: middle;
+    border: 1px solid #b7edd8;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.testimonials .item .testimonial-card-link:hover .tripadvisor-badge-pill {
+    background: #d4f5e7;
+    border-color: #34e0a1;
+    color: #003622;
+}
+.review-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 6px;
+    vertical-align: middle;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.testimonials .item .testimonial-card-link:hover .review-badge-pill {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+    color: #0f172a;
+}
 
 
 

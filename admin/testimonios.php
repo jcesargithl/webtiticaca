@@ -8,8 +8,7 @@ require_once __DIR__ . '/../includes/contact_helpers.php';
 require_admin_login();
 
 $reviews = get_all_reviews(false);
-$unread_count = get_unread_contacts_count();
-$unread_reservations = get_unread_reservations_count();
+$unread_count = get_unread_messages_count();
 $message = '';
 
 if (isset($_GET['msg'])) {
@@ -24,10 +23,24 @@ if (isset($_GET['msg'])) {
     }
 }
 
-// Estadísticas rápidas
+// Estadísticas
 $total_count = count($reviews);
 $active_count = count(array_filter($reviews, function($r) { return !isset($r['active']) || $r['active'] === true; }));
-$google_linked_count = count(array_filter($reviews, function($r) { return !empty(trim($r['google_url'] ?? '')); }));
+$tripadvisor_count = 0;
+$google_count = 0;
+$linked_count = 0;
+
+foreach ($reviews as $r) {
+    $url = trim(!empty($r['review_url']) ? $r['review_url'] : ($r['google_url'] ?? ''));
+    if ($url !== '') {
+        $linked_count++;
+        $p = get_review_platform_info($url);
+        if ($p) {
+            if ($p['platform'] === 'tripadvisor') $tripadvisor_count++;
+            elseif ($p['platform'] === 'google') $google_count++;
+        }
+    }
+}
 
 $default_avatars = [
     'img/team/07.png' => 'Avatar 1 (Nidia)',
@@ -111,6 +124,34 @@ $default_avatars = [
             background: #d2e3fc;
             color: #174ea6;
         }
+        .tripadvisor-pill {
+            display: inline-flex;
+            align-items: center;
+            background: #e8f9f2;
+            color: #007c50;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid #c2f0dc;
+            text-decoration: none;
+        }
+        .tripadvisor-pill:hover {
+            background: #c2f0dc;
+            color: #004f32;
+        }
+        .link-pill {
+            display: inline-flex;
+            align-items: center;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            text-decoration: none;
+        }
         .stat-card {
             background: #fff;
             border-radius: 10px;
@@ -155,17 +196,9 @@ $default_avatars = [
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3 py-1 text-white-50" href="mensajes.php">
-                            <i class="bi bi-chat-dots me-1"></i> Contactos
+                            <i class="bi bi-envelope me-1"></i> Mensajes
                             <?php if ($unread_count > 0): ?>
-                                <span class="badge bg-secondary rounded-pill ms-1"><?= $unread_count ?></span>
-                            <?php endif; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3 py-1 text-white-50" href="reservas.php">
-                            <i class="bi bi-calendar-check me-1"></i> Reservas
-                            <?php if ($unread_reservations > 0): ?>
-                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_reservations ?></span>
+                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_count ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
@@ -192,11 +225,11 @@ $default_avatars = [
 
         <!-- Encabezado y Métricas -->
         <div class="row align-items-center mb-4 g-3">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <h3 class="fw-bold mb-1" style="color: #0f2454;">Administrador de Reseñas</h3>
-                <p class="text-muted mb-0">Gestiona los testimonios de los viajeros. En cada recarga de página se eligen <strong>3 reseñas al azar</strong>.</p>
+                <p class="text-muted mb-0">Gestiona los testimonios de los viajeros con soporte para <strong>Google Maps</strong> y <strong>Tripadvisor</strong>. En cada recarga de página se eligen <strong>3 reseñas al azar</strong>.</p>
             </div>
-            <div class="col-md-6 text-md-end">
+            <div class="col-md-5 text-md-end">
                 <button type="button" class="btn btn-brand px-3 py-2 fw-semibold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAddReview">
                     <i class="bi bi-plus-circle me-1"></i> Nueva Reseña
                 </button>
@@ -230,11 +263,14 @@ $default_avatars = [
             <div class="col-md-4">
                 <div class="stat-card d-flex align-items-center shadow-sm">
                     <div class="rounded-circle p-3 bg-info bg-opacity-10 text-info me-3">
-                        <i class="bi bi-google fs-3"></i>
+                        <i class="bi bi-link-45deg fs-3"></i>
                     </div>
                     <div>
-                        <div class="text-muted small fw-semibold">Vinculadas a Google</div>
-                        <div class="fs-4 fw-bold text-dark"><?= $google_linked_count ?></div>
+                        <div class="text-muted small fw-semibold">Reseñas con Enlace</div>
+                        <div class="fs-5 fw-bold text-dark">
+                            <?= $linked_count ?>
+                            <span class="fs-6 fw-normal text-muted ms-1">(<?= $google_count ?> Google, <?= $tripadvisor_count ?> Tripadvisor)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -247,10 +283,10 @@ $default_avatars = [
                     <thead class="table-light">
                         <tr>
                             <th style="width: 70px;">Avatar</th>
-                            <th style="min-width: 160px;">Viajero</th>
-                            <th style="width: 120px;">Estrellas</th>
+                            <th style="min-width: 150px;">Viajero</th>
+                            <th style="width: 110px;">Estrellas</th>
                             <th>Testimonio</th>
-                            <th style="min-width: 140px;">Enlace Google</th>
+                            <th style="min-width: 150px;">Enlace Original</th>
                             <th style="width: 100px;">Estado</th>
                             <th class="text-end" style="min-width: 120px;">Acciones</th>
                         </tr>
@@ -271,7 +307,8 @@ $default_avatars = [
                                 $text = htmlspecialchars($r['text'] ?? '');
                                 $photo = htmlspecialchars(!empty($r['photo']) ? $r['photo'] : 'img/team/07.png');
                                 $rating = isset($r['rating']) ? (int)$r['rating'] : 5;
-                                $google_url = trim($r['google_url'] ?? '');
+                                $review_url = trim(!empty($r['review_url']) ? $r['review_url'] : ($r['google_url'] ?? ''));
+                                $platform_info = get_review_platform_info($review_url);
                                 $is_active = !isset($r['active']) || $r['active'] === true;
                             ?>
                                 <tr>
@@ -295,10 +332,20 @@ $default_avatars = [
                                         </div>
                                     </td>
                                     <td>
-                                        <?php if (!empty($google_url)): ?>
-                                            <a href="<?= htmlspecialchars($google_url) ?>" target="_blank" rel="noopener noreferrer" class="google-pill" title="Probar enlace en Google Maps">
-                                                <i class="bi bi-box-arrow-up-right me-1"></i> Google Maps
-                                            </a>
+                                        <?php if (!empty($review_url) && $platform_info): ?>
+                                            <?php if ($platform_info['platform'] === 'tripadvisor'): ?>
+                                                <a href="<?= htmlspecialchars($review_url) ?>" target="_blank" rel="noopener noreferrer" class="tripadvisor-pill" title="Probar enlace en Tripadvisor">
+                                                    <i class="bi bi-box-arrow-up-right me-1"></i> Tripadvisor
+                                                </a>
+                                            <?php elseif ($platform_info['platform'] === 'google'): ?>
+                                                <a href="<?= htmlspecialchars($review_url) ?>" target="_blank" rel="noopener noreferrer" class="google-pill" title="Probar enlace en Google Maps">
+                                                    <i class="bi bi-box-arrow-up-right me-1"></i> Google Maps
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="<?= htmlspecialchars($review_url) ?>" target="_blank" rel="noopener noreferrer" class="link-pill" title="Probar enlace">
+                                                    <i class="bi bi-box-arrow-up-right me-1"></i> Enlace Web
+                                                </a>
+                                            <?php endif; ?>
                                         <?php else: ?>
                                             <span class="badge bg-light text-secondary border">Sin enlace</span>
                                         <?php endif; ?>
@@ -322,7 +369,7 @@ $default_avatars = [
                                             data-text="<?= $text ?>"
                                             data-rating="<?= $rating ?>"
                                             data-photo="<?= $photo ?>"
-                                            data-google-url="<?= htmlspecialchars($google_url) ?>"
+                                            data-review-url="<?= htmlspecialchars($review_url) ?>"
                                             data-active="<?= $is_active ? '1' : '0' ?>"
                                             title="Editar Reseña">
                                             <i class="bi bi-pencil"></i>
@@ -377,12 +424,12 @@ $default_avatars = [
                                 </select>
                             </div>
                             <div class="col-md-8">
-                                <label class="form-label fw-semibold small">
-                                    URL de Google Maps (Opcional)
-                                    <i class="bi bi-info-circle text-muted ms-1" title="Si agregas este link, la tarjeta del testimonio será hipervinculable"></i>
+                                <label class="form-label fw-semibold small d-flex justify-content-between align-items-center">
+                                    <span>URL de la Reseña (Google Maps o Tripadvisor) <span class="text-muted fw-normal">(Opcional)</span></span>
+                                    <span id="add_detected_badge"></span>
                                 </label>
-                                <input type="url" name="google_url" class="form-control" placeholder="https://www.google.com/maps/reviews/@...">
-                                <div class="form-text small">Si se deja vacío, la reseña se mostrará como texto sin enlace.</div>
+                                <input type="url" name="review_url" id="add_review_url" class="form-control" placeholder="https://www.tripadvisor.com/... o https://www.google.com/maps/...">
+                                <div class="form-text small">Pega el link de Google Maps o Tripadvisor. El sistema detectará automáticamente la plataforma y asignará su distintivo.</div>
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold small">Comentario / Testimonio <span class="text-danger">*</span></label>
@@ -461,9 +508,12 @@ $default_avatars = [
                                 </select>
                             </div>
                             <div class="col-md-8">
-                                <label class="form-label fw-semibold small">URL de Google Maps (Opcional)</label>
-                                <input type="url" name="google_url" id="edit_google_url" class="form-control" placeholder="https://www.google.com/maps/reviews/@...">
-                                <div class="form-text small">Si se deja vacío, la reseña no tendrá hipervínculo en la página.</div>
+                                <label class="form-label fw-semibold small d-flex justify-content-between align-items-center">
+                                    <span>URL de la Reseña (Google Maps o Tripadvisor) <span class="text-muted fw-normal">(Opcional)</span></span>
+                                    <span id="edit_detected_badge"></span>
+                                </label>
+                                <input type="url" name="review_url" id="edit_review_url" class="form-control" placeholder="https://www.tripadvisor.com/... o https://www.google.com/maps/...">
+                                <div class="form-text small">Pega el link de Google Maps o Tripadvisor. Si se deja vacío, la reseña no tendrá hipervínculo.</div>
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold small">Comentario / Testimonio <span class="text-danger">*</span></label>
@@ -545,6 +595,34 @@ $default_avatars = [
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Detector visual dinámico de plataforma al escribir o pegar la URL
+            function updatePlatformBadge(inputEl, badgeEl) {
+                const val = (inputEl.value || '').trim().toLowerCase();
+                if (!val) {
+                    badgeEl.innerHTML = '';
+                    return;
+                }
+                if (val.includes('tripadvisor')) {
+                    badgeEl.innerHTML = '<span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Tripadvisor detectado</span>';
+                } else if (val.includes('google') || val.includes('goo.gl')) {
+                    badgeEl.innerHTML = '<span class="badge bg-primary-subtle text-primary border border-primary-subtle"><i class="bi bi-check-circle me-1"></i>Google Maps detectado</span>';
+                } else {
+                    badgeEl.innerHTML = '<span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle"><i class="bi bi-link-45deg me-1"></i>Enlace web</span>';
+                }
+            }
+
+            const addUrlInput = document.getElementById('add_review_url');
+            const addBadge = document.getElementById('add_detected_badge');
+            if (addUrlInput && addBadge) {
+                addUrlInput.addEventListener('input', () => updatePlatformBadge(addUrlInput, addBadge));
+            }
+
+            const editUrlInput = document.getElementById('edit_review_url');
+            const editBadge = document.getElementById('edit_detected_badge');
+            if (editUrlInput && editBadge) {
+                editUrlInput.addEventListener('input', () => updatePlatformBadge(editUrlInput, editBadge));
+            }
+
             // Manejar modal de edición
             const editModalEl = document.getElementById('modalEditReview');
             const editModal = new bootstrap.Modal(editModalEl);
@@ -556,7 +634,11 @@ $default_avatars = [
                     document.getElementById('edit_role').value = this.dataset.role;
                     document.getElementById('edit_text').value = this.dataset.text;
                     document.getElementById('edit_rating').value = this.dataset.rating;
-                    document.getElementById('edit_google_url').value = this.dataset.googleUrl;
+                    
+                    const reviewUrl = this.dataset.reviewUrl || '';
+                    document.getElementById('edit_review_url').value = reviewUrl;
+                    updatePlatformBadge(editUrlInput, editBadge);
+
                     document.getElementById('edit_active').checked = this.dataset.active === '1';
 
                     const currentPhoto = this.dataset.photo;

@@ -7,6 +7,7 @@
     "rating": 5,
     "photo": "img/team/07.png",
     "google_url": "https://www.google.com/maps/reviews/@-15.8446424,-70.0272366,17z/data=!3m1!4b1!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2tnMFRVTkJVRXRPUjJKV2EyUlhWa0V3YkVKMlVGRRAB!2m1!1s0x0:0x129674ce37f42ad2?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+    "review_url": "https://www.google.com/maps/reviews/@-15.8446424,-70.0272366,17z/data=!3m1!4b1!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2tnMFRVTkJVRXRPUjJKV2EyUlhWa0V3YkVKMlVGRRAB!2m1!1s0x0:0x129674ce37f42ad2?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
     "active": true,
     "created_at": "2026-10-25 12:00:00"
   },
@@ -14,10 +15,11 @@
     "id": "rev_2",
     "name": "Eberth Calsin",
     "role": "Viajero",
-    "text": "Excelente servicio, el personal muy amable.",
+    "text": "Excelente servicio, el personal muy amable y la atención insuperable.",
     "rating": 5,
     "photo": "img/team/08.png",
     "google_url": "",
+    "review_url": "https://www.tripadvisor.com.pe/ShowUserReviews-g298442-d8449623-r932860675-Titicaca_Experiences-Puno_Puno_Region.html",
     "active": true,
     "created_at": "2026-10-25 12:05:00"
   },
@@ -29,6 +31,7 @@
     "rating": 5,
     "photo": "img/team/09.png",
     "google_url": "",
+    "review_url": "",
     "active": true,
     "created_at": "2026-10-25 12:10:00"
   },
@@ -40,6 +43,7 @@
     "rating": 5,
     "photo": "img/team/04.png",
     "google_url": "",
+    "review_url": "",
     "active": true,
     "created_at": "2026-10-25 12:15:00"
   },
@@ -51,6 +55,7 @@
     "rating": 5,
     "photo": "img/team/05.png",
     "google_url": "",
+    "review_url": "",
     "active": true,
     "created_at": "2026-10-25 12:20:00"
   }

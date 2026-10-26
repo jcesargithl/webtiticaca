@@ -27,7 +27,7 @@ switch ($action) {
         $role = trim($_POST['role'] ?? 'Viajero');
         $text = trim($_POST['text'] ?? '');
         $rating = isset($_POST['rating']) ? max(1, min(5, (int)$_POST['rating'])) : 5;
-        $google_url = trim($_POST['google_url'] ?? '');
+        $review_url = trim($_POST['review_url'] ?? ($_POST['google_url'] ?? ''));
         $active = isset($_POST['active']) ? (bool)$_POST['active'] : true;
         
         $selected_avatar = trim($_POST['selected_avatar'] ?? 'img/team/07.png');
@@ -57,7 +57,8 @@ switch ($action) {
                 'text' => $text,
                 'rating' => $rating,
                 'photo' => $final_photo,
-                'google_url' => $google_url,
+                'review_url' => $review_url,
+                'google_url' => $review_url,
                 'active' => $active,
                 'created_at' => date('Y-m-d H:i:s')
             ];
@@ -76,7 +77,7 @@ switch ($action) {
         $role = trim($_POST['role'] ?? 'Viajero');
         $text = trim($_POST['text'] ?? '');
         $rating = isset($_POST['rating']) ? max(1, min(5, (int)$_POST['rating'])) : 5;
-        $google_url = trim($_POST['google_url'] ?? '');
+        $review_url = trim($_POST['review_url'] ?? ($_POST['google_url'] ?? ''));
         $active = isset($_POST['active']) && $_POST['active'] == '1';
 
         $found = false;
@@ -111,7 +112,8 @@ switch ($action) {
                 $r['text'] = $text !== '' ? $text : $r['text'];
                 $r['rating'] = $rating;
                 $r['photo'] = $final_photo;
-                $r['google_url'] = $google_url;
+                $r['review_url'] = $review_url;
+                $r['google_url'] = $review_url;
                 $r['active'] = $active;
                 $r['updated_at'] = date('Y-m-d H:i:s');
                 break;
