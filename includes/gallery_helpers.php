@@ -22,10 +22,16 @@ function get_gallery_images() {
 function save_gallery_images($images) {
     $dir = dirname(GALLERY_FILE);
     if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+        @mkdir($dir, 0775, true);
     }
-    $json = json_encode($images, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return file_put_contents(GALLERY_FILE, $json) !== false;
+    $json = json_encode(array_values($images), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $bytes = file_put_contents(GALLERY_FILE, $json, LOCK_EX);
+    if ($bytes !== false) {
+        @chmod(GALLERY_FILE, 0666);
+        clearstatcache(true, GALLERY_FILE);
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -46,10 +52,16 @@ function get_gallery_videos() {
 function save_gallery_videos($videos) {
     $dir = dirname(VIDEOS_FILE);
     if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+        @mkdir($dir, 0775, true);
     }
-    $json = json_encode($videos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return file_put_contents(VIDEOS_FILE, $json) !== false;
+    $json = json_encode(array_values($videos), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $bytes = file_put_contents(VIDEOS_FILE, $json, LOCK_EX);
+    if ($bytes !== false) {
+        @chmod(VIDEOS_FILE, 0666);
+        clearstatcache(true, VIDEOS_FILE);
+        return true;
+    }
+    return false;
 }
 
 /**

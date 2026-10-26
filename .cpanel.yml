@@ -2,5 +2,20 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/titicaca/public_html/
+    # 1. Asegurar directorios de destino y respaldo
+    - /bin/mkdir -p $DEPLOYPATH/data/
+    - /bin/mkdir -p $DEPLOYPATH/img/team/uploads/
+    - /bin/mkdir -p /home/titicaca/cpanel_data_backup/team_uploads/
+    # 2. Respaldar datos y fotos de produccion antes de la copia del repositorio
+    - /bin/cp -a $DEPLOYPATH/data/*.json /home/titicaca/cpanel_data_backup/ 2>/dev/null || true
+    - /bin/cp -a $DEPLOYPATH/img/team/uploads/* /home/titicaca/cpanel_data_backup/team_uploads/ 2>/dev/null || true
+    # 3. Desplegar archivos del repositorio
     - /bin/cp -R * $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
+    # 4. Restaurar datos y fotos reales de produccion (evita sobrescribir lo creado en el admin)
+    - /bin/cp -a /home/titicaca/cpanel_data_backup/*.json $DEPLOYPATH/data/ 2>/dev/null || true
+    - /bin/cp -a /home/titicaca/cpanel_data_backup/team_uploads/* $DEPLOYPATH/img/team/uploads/ 2>/dev/null || true
+    # 5. Asegurar permisos de lectura y escritura para PHP en cPanel
+    - /bin/chmod 775 $DEPLOYPATH/data/
+    - /bin/chmod 666 $DEPLOYPATH/data/*.json 2>/dev/null || true
+    - /bin/chmod 775 $DEPLOYPATH/img/team/uploads/

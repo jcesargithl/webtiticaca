@@ -1,5 +1,7 @@
 <?php
 // resenas.php - Página Oficial de Reseñas y Experiencias de Viajeros
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 require_once __DIR__ . '/includes/reviews_helpers.php';
 
 $reviews = get_all_reviews(true);

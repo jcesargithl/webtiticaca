@@ -13,7 +13,11 @@ function get_all_reviews($only_active = false) {
     if (!file_exists(REVIEWS_FILE)) {
         return [];
     }
+    clearstatcache(true, REVIEWS_FILE);
     $json = file_get_contents(REVIEWS_FILE);
+    if ($json === false || trim($json) === '') {
+        return [];
+    }
     $reviews = json_decode($json, true);
     if (!is_array($reviews)) {
         return [];
@@ -34,10 +38,16 @@ function get_all_reviews($only_active = false) {
 function save_reviews($reviews) {
     $dir = dirname(REVIEWS_FILE);
     if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+        @mkdir($dir, 0775, true);
     }
     $json = json_encode(array_values($reviews), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return file_put_contents(REVIEWS_FILE, $json) !== false;
+    $bytes = file_put_contents(REVIEWS_FILE, $json, LOCK_EX);
+    if ($bytes !== false) {
+        @chmod(REVIEWS_FILE, 0666);
+        clearstatcache(true, REVIEWS_FILE);
+        return true;
+    }
+    return false;
 }
 
 /**

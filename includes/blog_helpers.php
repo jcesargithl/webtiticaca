@@ -23,10 +23,16 @@ function get_all_posts($sort_desc = true) {
 function save_posts($posts) {
     $dir = dirname(POSTS_FILE);
     if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+        @mkdir($dir, 0775, true);
     }
-    $json = json_encode($posts, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return file_put_contents(POSTS_FILE, $json) !== false;
+    $json = json_encode(array_values($posts), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $bytes = file_put_contents(POSTS_FILE, $json, LOCK_EX);
+    if ($bytes !== false) {
+        @chmod(POSTS_FILE, 0666);
+        clearstatcache(true, POSTS_FILE);
+        return true;
+    }
+    return false;
 }
 
 function get_post_by_slug($slug) {

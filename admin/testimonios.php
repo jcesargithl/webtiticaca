@@ -1,5 +1,7 @@
 <?php
 // admin/testimonios.php
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/../includes/reviews_helpers.php';
@@ -10,6 +12,11 @@ require_admin_login();
 $reviews = get_all_reviews(false);
 $unread_count = get_unread_messages_count();
 $message = '';
+$error_message = '';
+
+if (isset($_GET['error']) && $_GET['error'] === 'save_failed') {
+    $error_message = 'No se pudo guardar la reseña en el servidor (error de escritura en data/reviews.json). Verifica los permisos del directorio data/.';
+}
 
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] === 'added') {
@@ -216,6 +223,13 @@ $default_avatars = [
     </nav>
 
     <div class="container mb-5">
+        <?php if (!empty($error_message)): ?>
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= htmlspecialchars($error_message) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
         <?php if ($message): ?>
             <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i> <?= htmlspecialchars($message) ?>
@@ -227,7 +241,7 @@ $default_avatars = [
         <div class="row align-items-center mb-4 g-3">
             <div class="col-md-7">
                 <h3 class="fw-bold mb-1" style="color: #0f2454;">Administrador de Reseñas</h3>
-                <p class="text-muted mb-0">Gestiona los testimonios de los viajeros con soporte para <strong>Google Maps</strong> y <strong>Tripadvisor</strong>. En cada recarga de página se eligen <strong>3 reseñas al azar</strong>.</p>
+                <p class="text-muted mb-0">Gestiona los testimonios con soporte para <strong>Google Maps</strong>, <strong>Tripadvisor</strong> y <strong>Web</strong>. En <a href="../resenas.php" target="_blank" class="fw-bold text-decoration-none">resenas.php</a> se muestra el catálogo completo, y en el carrusel de inicio se eligen 3 al azar.</p>
             </div>
             <div class="col-md-5 text-md-end">
                 <a href="../resenas.php" target="_blank" class="btn btn-outline-primary px-3 py-2 fw-semibold shadow-sm me-2">

@@ -65,7 +65,11 @@ switch ($action) {
 
             // Añadir al inicio para que aparezca primero en la tabla del admin
             array_unshift($reviews, $new_rev);
-            save_reviews($reviews);
+            $saved = save_reviews($reviews);
+            if (!$saved) {
+                header('Location: testimonios.php?error=save_failed');
+                exit;
+            }
         }
 
         header('Location: testimonios.php?msg=added');
@@ -122,7 +126,11 @@ switch ($action) {
         unset($r);
 
         if ($found) {
-            save_reviews($reviews);
+            $saved = save_reviews($reviews);
+            if (!$saved) {
+                header('Location: testimonios.php?error=save_failed');
+                exit;
+            }
         }
 
         header('Location: testimonios.php?msg=updated');
@@ -137,7 +145,16 @@ switch ($action) {
                     $filtered[] = $r;
                 }
             }
-            save_reviews($filtered);
+            $saved = save_reviews($filtered);
+            if (!$saved) {
+                if ($is_ajax) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => 'Error de guardado']);
+                    exit;
+                }
+                header('Location: testimonios.php?error=save_failed');
+                exit;
+            }
         }
 
         if ($is_ajax) {
@@ -161,7 +178,16 @@ switch ($action) {
                 }
             }
             unset($r);
-            save_reviews($reviews);
+            $saved = save_reviews($reviews);
+            if (!$saved) {
+                if ($is_ajax) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => 'Error de guardado']);
+                    exit;
+                }
+                header('Location: testimonios.php?error=save_failed');
+                exit;
+            }
         }
 
         if ($is_ajax) {
