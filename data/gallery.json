@@ -1,0 +1,122 @@
+[
+  {
+    "id": "img_1",
+    "src": "img/slider/galeria/g1.jpg",
+    "title": "Lago Titicaca",
+    "alt": "Lago Titicaca - Titicaca Experiences"
+  },
+  {
+    "id": "img_2",
+    "src": "img/slider/galeria/g2.jpg",
+    "title": "Islas Flotantes de los Uros",
+    "alt": "Islas Flotantes de los Uros - Titicaca Experiences"
+  },
+  {
+    "id": "img_3",
+    "src": "img/slider/galeria/g3.jpg",
+    "title": "Paisajes del Lago Titicaca",
+    "alt": "Paisajes del Lago Titicaca"
+  },
+  {
+    "id": "img_4",
+    "src": "img/slider/galeria/g4.jpg",
+    "title": "Paseo en Canoas y Embarcaciones",
+    "alt": "Paseo en Canoas y Embarcaciones"
+  },
+  {
+    "id": "img_5",
+    "src": "img/slider/galeria/g5.jpg",
+    "title": "Puesta de sol en el Titicaca",
+    "alt": "Puesta de sol en el Titicaca"
+  },
+  {
+    "id": "img_6",
+    "src": "img/slider/galeria/g6.jpg",
+    "title": "Cultura y Tradición en Taquile",
+    "alt": "Cultura y Tradición en Taquile"
+  },
+  {
+    "id": "img_7",
+    "src": "img/slider/galeria/g7.jpg",
+    "title": "Artesanías y Textiles Vivos",
+    "alt": "Artesanías y Textiles Vivos"
+  },
+  {
+    "id": "img_8",
+    "src": "img/slider/galeria/g8.jpg",
+    "title": "Vistas Panorámicas de las Islas",
+    "alt": "Vistas Panorámicas de las Islas"
+  },
+  {
+    "id": "img_9",
+    "src": "img/slider/galeria/g9.jpg",
+    "title": "Turismo Vivencial y Comunitario",
+    "alt": "Turismo Vivencial y Comunitario"
+  },
+  {
+    "id": "img_10",
+    "src": "img/slider/galeria/g10.jpg",
+    "title": "Naturaleza y Flora Autóctona",
+    "alt": "Naturaleza y Flora Autóctona"
+  },
+  {
+    "id": "img_11",
+    "src": "img/slider/galeria/g11.jpg",
+    "title": "Aventuras en Kayak y Remo",
+    "alt": "Aventuras en Kayak y Remo"
+  },
+  {
+    "id": "img_12",
+    "src": "img/slider/galeria/g12.jpg",
+    "title": "Costumbres y Música Típica",
+    "alt": "Costumbres y Música Típica"
+  },
+  {
+    "id": "img_13",
+    "src": "img/slider/galeria/g13.jpg",
+    "title": "Arqueología y Chullpas de Sillustani",
+    "alt": "Arqueología y Chullpas de Sillustani"
+  },
+  {
+    "id": "img_14",
+    "src": "img/slider/galeria/g14.jpg",
+    "title": "Aves y Fauna del Lago",
+    "alt": "Aves y Fauna del Lago"
+  },
+  {
+    "id": "img_15",
+    "src": "img/slider/galeria/g15.jpg",
+    "title": "Mirador Natural del Titicaca",
+    "alt": "Mirador Natural del Titicaca"
+  },
+  {
+    "id": "img_16",
+    "src": "img/slider/galeria/g16.jpg",
+    "title": "Hospitalidad y Calidez Local",
+    "alt": "Hospitalidad y Calidez Local"
+  },
+  {
+    "id": "img_17",
+    "src": "img/slider/galeria/g17.jpg",
+    "title": "Rutas Místicas y Sagradas",
+    "alt": "Rutas Místicas y Sagradas"
+  },
+  {
+    "id": "img_18",
+    "src": "img/slider/galeria/g18.jpg",
+    "title": "Navegación al Amanecer",
+    "alt": "Navegación al Amanecer"
+  },
+  {
+    "id": "img_19",
+    "src": "img/slider/galeria/g19.jpg",
+    "title": "Senderismo y Caminatas",
+    "alt": "Senderismo y Caminatas"
+  },
+  {
+    "id": "img_20",
+    "src": "img/slider/galeria/g20.jpg",
+    "title": "Recuerdos Inolvidables en Puno",
+    "alt": "Recuerdos Inolvidables en Puno"
+  }
+]

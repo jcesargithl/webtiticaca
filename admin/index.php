@@ -106,19 +106,44 @@ $posts = $is_logged ? get_all_posts(true) : [];
 
 <?php else: ?>
     <!-- Panel de Administración -->
-    <nav class="navbar navbar-custom navbar-dark px-3 py-2 mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom px-3 py-2 mb-4">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="../img/favicon.png" alt="" width="28" height="28" class="me-2">
-                <span class="fw-bold">Panel Blog - Titicaca Experiences</span>
+                <img src="../img/favicon.png" alt="" width="26" height="26" class="me-2">
+                <span class="fw-bold">Admin Titicaca</span>
             </a>
-            <div class="d-flex align-items-center gap-2">
-                <a href="../blog.php" target="_blank" class="btn btn-sm btn-outline-light">
-                    <i class="bi bi-box-arrow-up-right me-1"></i> Ver Blog en vivo
-                </a>
-                <a href="logout.php" class="btn btn-sm btn-light text-danger">
-                    <i class="bi bi-power"></i> Salir
-                </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 active bg-white text-dark fw-bold rounded" href="index.php">
+                            <i class="bi bi-newspaper me-1 text-primary"></i> Blog
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="galeria.php">
+                            <i class="bi bi-images me-1"></i> Fotos de Galería
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="videos.php">
+                            <i class="bi bi-camera-video me-1"></i> Videos
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="../galeria.php" target="_blank" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-eye me-1"></i> Ver Galería en Vivo
+                    </a>
+                    <a href="../blog.php" target="_blank" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Ver Blog en Vivo
+                    </a>
+                    <a href="logout.php" class="btn btn-sm btn-light text-danger">
+                        <i class="bi bi-power"></i> Salir
+                    </a>
+                </div>
             </div>
         </div>
     </nav>

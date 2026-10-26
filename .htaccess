@@ -6,6 +6,9 @@
     # Redirigir blog.html a blog.php de forma transparente
     RewriteRule ^blog\.html$ blog.php [L,QSA]
 
+    # Redirigir galeria.html a galeria.php de forma transparente
+    RewriteRule ^galeria\.html$ galeria.php [L,QSA]
+
     # Redirigir posts antiguos a la nueva plantilla dinámica
     RewriteRule ^post1\.html$ post.php?slug=la-observacion-de-aves-una-actividad-fascinante [L,QSA]
     RewriteRule ^post2\.html$ post.php?slug=puno-remo-parado-en-tabla-el-nuevo-deporte-del-titicaca [L,QSA]
@@ -15,8 +18,8 @@
     RewriteRule ^post/([a-zA-Z0-9_-]+)/?$ post.php?slug=$1 [L,QSA]
 </IfModule>
 
-# Proteger el archivo de datos JSON para que nadie pueda descargarlo directamente por URL
-<Files "posts.json">
+# Proteger archivos de datos JSON para que nadie pueda descargarlos directamente por URL
+<FilesMatch "\.json$">
     Order allow,deny
     Deny from all
-</Files>
+</FilesMatch>

@@ -221,15 +221,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <!-- Barra Superior -->
-    <nav class="navbar navbar-custom navbar-dark px-3 py-2 mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom px-3 py-2 mb-4">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="../img/favicon.png" alt="" width="28" height="28" class="me-2">
-                <span class="fw-bold">Panel Blog - Titicaca Experiences</span>
+                <img src="../img/favicon.png" alt="" width="26" height="26" class="me-2">
+                <span class="fw-bold">Admin Titicaca</span>
             </a>
             <div class="d-flex align-items-center gap-2">
                 <a href="index.php" class="btn btn-sm btn-outline-light">
-                    <i class="bi bi-arrow-left me-1"></i> Volver a la lista
+                    <i class="bi bi-arrow-left me-1"></i> Volver al Blog
+                </a>
+                <a href="galeria.php" class="btn btn-sm btn-outline-light">
+                    <i class="bi bi-images me-1"></i> Ir a Galería
                 </a>
             </div>
         </div>
