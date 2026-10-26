@@ -149,6 +149,21 @@ $email_content = "<!DOCTYPE html>
 $headers_str = implode("\r\n", $headers);
 $enviado     = @mail($correo_destino, $encoded_subject, $email_content, $headers_str, "-f " . $from);
 
+// Guardar respaldo seguro en el servidor (en data/messages.json)
+require_once __DIR__ . '/includes/contact_helpers.php';
+save_message([
+    'type'       => 'reserva',
+    'tour'       => $tour,
+    'name'       => $name,
+    'email'      => $email,
+    'phone'      => $phone,
+    'fecha'      => $fecha,
+    'people'     => $people,
+    'message'    => $message,
+    'ip'         => $remoteIp,
+    'email_sent' => $enviado ? true : false
+]);
+
 if ($enviado) {
     http_response_code(200);
     echo "Tu solicitud de reserva fue enviada satisfactoriamente. Nos comunicaremos contigo pronto.";

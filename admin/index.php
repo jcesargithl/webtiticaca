@@ -2,6 +2,7 @@
 // admin/index.php
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/../includes/blog_helpers.php';
+require_once __DIR__ . '/../includes/contact_helpers.php';
 
 $error = '';
 $message = '';
@@ -28,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 $is_logged = isset($_SESSION['admin_logged']) && $_SESSION['admin_logged'] === true;
 $posts = $is_logged ? get_all_posts(true) : [];
+$unread_count = $is_logged ? get_unread_messages_count() : 0;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -130,6 +132,14 @@ $posts = $is_logged ? get_all_posts(true) : [];
                     <li class="nav-item">
                         <a class="nav-link px-3 py-1 text-white-50" href="videos.php">
                             <i class="bi bi-camera-video me-1"></i> Videos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="mensajes.php">
+                            <i class="bi bi-envelope me-1"></i> Mensajes
+                            <?php if ($unread_count > 0): ?>
+                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_count ?></span>
+                            <?php endif; ?>
                         </a>
                     </li>
                 </ul>
