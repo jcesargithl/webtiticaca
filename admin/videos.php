@@ -3,10 +3,12 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/../includes/gallery_helpers.php';
+require_once __DIR__ . '/../includes/contact_helpers.php';
 
 require_admin_login();
 
 $videos = get_gallery_videos();
+$unread_count = get_unread_messages_count();
 $message = '';
 
 if (isset($_GET['msg'])) {
@@ -148,6 +150,22 @@ if (isset($_GET['msg'])) {
                     <li class="nav-item">
                         <a class="nav-link px-3 py-1 active bg-white text-dark fw-bold rounded" href="videos.php">
                             <i class="bi bi-camera-video me-1 text-danger"></i> Videos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="mensajes.php">
+                            <i class="bi bi-envelope me-1"></i> Mensajes
+                            <?php if ($unread_count > 0): ?>
+                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_count ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-1 text-white-50" href="mensajes.php">
+                            <i class="bi bi-envelope me-1"></i> Mensajes
+                            <?php if ($unread_count > 0): ?>
+                                <span class="badge bg-danger rounded-pill ms-1"><?= $unread_count ?></span>
+                            <?php endif; ?>
                         </a>
                     </li>
                 </ul>
