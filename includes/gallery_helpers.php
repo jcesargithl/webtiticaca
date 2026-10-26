@@ -11,6 +11,7 @@ function get_gallery_images() {
     if (!file_exists(GALLERY_FILE)) {
         return [];
     }
+    clearstatcache(true, GALLERY_FILE);
     $json = file_get_contents(GALLERY_FILE);
     $images = json_decode($json, true);
     return is_array($images) ? $images : [];
@@ -41,6 +42,7 @@ function get_gallery_videos() {
     if (!file_exists(VIDEOS_FILE)) {
         return [];
     }
+    clearstatcache(true, VIDEOS_FILE);
     $json = file_get_contents(VIDEOS_FILE);
     $videos = json_decode($json, true);
     return is_array($videos) ? $videos : [];

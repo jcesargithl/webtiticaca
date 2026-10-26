@@ -1,4 +1,6 @@
 <?php
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 // admin/galeria.php
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/auth.php';

@@ -7,6 +7,7 @@ function get_all_posts($sort_desc = true) {
     if (!file_exists(POSTS_FILE)) {
         return [];
     }
+    clearstatcache(true, POSTS_FILE);
     $json = file_get_contents(POSTS_FILE);
     $posts = json_decode($json, true);
     if (!is_array($posts)) {

@@ -17,6 +17,7 @@ function get_all_messages() {
     if (!file_exists($file)) {
         return [];
     }
+    clearstatcache(true, $file);
     $content = file_get_contents($file);
     if ($content === false || trim($content) === '') {
         return [];
@@ -34,10 +35,16 @@ function save_all_messages(array $messages) {
     $file = get_messages_file();
     $dir = dirname($file);
     if (!is_dir($dir)) {
-        @mkdir($dir, 0755, true);
+        @mkdir($dir, 0775, true);
     }
-    $json = json_encode($messages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    return file_put_contents($file, $json, LOCK_EX) !== false;
+    $json = json_encode(array_values($messages), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $bytes = file_put_contents($file, $json, LOCK_EX);
+    if ($bytes !== false) {
+        @chmod($file, 0666);
+        clearstatcache(true, $file);
+        return true;
+    }
+    return false;
 }
 
 /**

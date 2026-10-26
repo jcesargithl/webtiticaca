@@ -2,20 +2,31 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/titicaca/public_html/
-    # 1. Asegurar directorios de destino y respaldo
+    # 1. Asegurar directorios de destino en produccion
     - /bin/mkdir -p $DEPLOYPATH/data/
     - /bin/mkdir -p $DEPLOYPATH/img/team/uploads/
+    - /bin/mkdir -p $DEPLOYPATH/img/slider/galeria/uploads/
+    - /bin/mkdir -p $DEPLOYPATH/img/blog/uploads/
+    # 2. Asegurar directorios de respaldo en el home de cPanel (fuera de public_html)
     - /bin/mkdir -p /home/titicaca/cpanel_data_backup/team_uploads/
-    # 2. Respaldar datos y fotos de produccion antes de la copia del repositorio
+    - /bin/mkdir -p /home/titicaca/cpanel_data_backup/galeria_uploads/
+    - /bin/mkdir -p /home/titicaca/cpanel_data_backup/blog_uploads/
+    # 3. Respaldar TODOS los datos JSON y fotos de produccion antes de copiar desde el repositorio
     - /bin/cp -a $DEPLOYPATH/data/*.json /home/titicaca/cpanel_data_backup/ 2>/dev/null || true
     - /bin/cp -a $DEPLOYPATH/img/team/uploads/* /home/titicaca/cpanel_data_backup/team_uploads/ 2>/dev/null || true
-    # 3. Desplegar archivos del repositorio
+    - /bin/cp -a $DEPLOYPATH/img/slider/galeria/uploads/* /home/titicaca/cpanel_data_backup/galeria_uploads/ 2>/dev/null || true
+    - /bin/cp -a $DEPLOYPATH/img/blog/uploads/* /home/titicaca/cpanel_data_backup/blog_uploads/ 2>/dev/null || true
+    # 4. Desplegar archivos del repositorio
     - /bin/cp -R * $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
-    # 4. Restaurar datos y fotos reales de produccion (evita sobrescribir lo creado en el admin)
+    # 5. Restaurar datos y fotos reales de produccion (evita sobrescribir lo creado en el admin)
     - /bin/cp -a /home/titicaca/cpanel_data_backup/*.json $DEPLOYPATH/data/ 2>/dev/null || true
     - /bin/cp -a /home/titicaca/cpanel_data_backup/team_uploads/* $DEPLOYPATH/img/team/uploads/ 2>/dev/null || true
-    # 5. Asegurar permisos de lectura y escritura para PHP en cPanel
+    - /bin/cp -a /home/titicaca/cpanel_data_backup/galeria_uploads/* $DEPLOYPATH/img/slider/galeria/uploads/ 2>/dev/null || true
+    - /bin/cp -a /home/titicaca/cpanel_data_backup/blog_uploads/* $DEPLOYPATH/img/blog/uploads/ 2>/dev/null || true
+    # 6. Asegurar permisos de lectura y escritura para PHP en cPanel
     - /bin/chmod 775 $DEPLOYPATH/data/
     - /bin/chmod 666 $DEPLOYPATH/data/*.json 2>/dev/null || true
-    - /bin/chmod 775 $DEPLOYPATH/img/team/uploads/
+    - /bin/chmod 775 $DEPLOYPATH/img/team/uploads/ 2>/dev/null || true
+    - /bin/chmod 775 $DEPLOYPATH/img/slider/galeria/uploads/ 2>/dev/null || true
+    - /bin/chmod 775 $DEPLOYPATH/img/blog/uploads/ 2>/dev/null || true
