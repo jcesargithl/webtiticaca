@@ -691,9 +691,9 @@ $(function () {
     if (!$faders.length) return;
 
     var tourSlides = [
-        { img: 'img/slider/tourcanoas/max3.jpg', link: 'tour-canoas.html', title: 'Canoas Polinésicas' },
+        { img: 'img/about2.jpg', link: 'tour-canoas.html', title: 'Canoas Polinésicas' },
         { img: 'img/slider/touramantani/slide1.jpg', link: 'tour-amantani.html', title: 'Isla Amantaní' },
-        { img: 'img/slider/toururos/max3.jpg', link: 'tour-uros.html', title: 'Islas de los Uros' },
+        { img: 'img/slider/toururos/max5.jpg', link: 'tour-uros.html', title: 'Islas de los Uros' },
         { img: 'img/slider/tourtaquile/slide1.jpg', link: 'tour-taquile.html', title: 'Isla Taquile' },
         { img: 'img/slider/toursillustani/max4.jpg', link: 'tour-sillustani.html', title: 'Chullpas de Sillustani' },
         { img: 'img/tours/touravespuno/AAG_1879_max.jpg', link: 'tour-aves-puno.html', title: 'Observación de Aves' },
@@ -731,7 +731,7 @@ $(function () {
 
         var playlist = shuffleArray(tourSlides);
         // Avoid repeating Canoas immediately if about2.jpg is already active
-        if (playlist.length > 1 && playlist[0].img.indexOf('tourcanoas') !== -1) {
+        if (playlist.length > 1 && playlist[0].img.indexOf('about2.jpg') !== -1) {
             playlist.push(playlist.shift());
         }
 
@@ -757,7 +757,12 @@ $(function () {
 
             // Guarantee image is fully loaded in memory BEFORE starting transition
             var loader = new Image();
-            loader.onload = function () {
+            var hasTriggered = false;
+
+            function triggerSlideTransition() {
+                if (hasTriggered) return;
+                hasTriggered = true;
+
                 var $front = activeIsSlide1 ? $slide1 : $slide2;
                 var $back = activeIsSlide1 ? $slide2 : $slide1;
 
@@ -780,13 +785,16 @@ $(function () {
                         isTransitioning = false;
                     }, 1450);
                 }, 80);
-            };
+            }
 
+            loader.onload = triggerSlideTransition;
             loader.onerror = function () {
                 isTransitioning = false;
             };
-
             loader.src = nextTour.img;
+            if (loader.complete) {
+                triggerSlideTransition();
+            }
         }
 
         var timer = setInterval(showNextTour, intervalMs);
