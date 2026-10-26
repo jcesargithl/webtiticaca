@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/gallery_helpers.php';
 
 $images = get_gallery_images();
 $videos = get_gallery_videos();
-$initial_show = 12; // Número de imágenes visibles inicialmente
+$initial_show = 10; // Número de imágenes visibles inicialmente (2 ciclos completos de 3+2)
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,12 +21,11 @@ $initial_show = 12; // Número de imágenes visibles inicialmente
     <link rel="stylesheet" href="css/translator.css" />
     <style>
         .gallery-item {
-            transition: transform 0.3s ease, opacity 0.4s ease;
+            transition: opacity 0.4s ease;
         }
         .gallery-box {
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            position: relative;
         }
         .gallery-img img {
             width: 100%;
@@ -37,42 +36,38 @@ $initial_show = 12; // Número de imágenes visibles inicialmente
         .gallery-box:hover .gallery-img img {
             transform: scale(1.05);
         }
-        .btn-load-more-gal {
-            background: linear-gradient(135deg, #2095AE 0%, #156c7e 100%);
-            color: #fff !important;
-            border: none;
-            padding: 13px 36px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 6px 20px rgba(32, 149, 174, 0.35);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        /* Botón de Cargar Más idéntico a los botones del sitio (cuadrado, fuente Barlow) */
+        .btn-load-more-wrap .butn-dark {
+            padding-top: 0;
+            padding-bottom: 0;
         }
-        .btn-load-more-gal:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(32, 149, 174, 0.45);
-            background: linear-gradient(135deg, #17788c 0%, #0e4c58 100%);
+        .btn-load-more-wrap .butn-dark a {
+            border-radius: 0 !important;
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'Barlow', sans-serif;
+            letter-spacing: 0.5px;
         }
         .vid-box-card {
-            border-radius: 10px;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             background: #fff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .vid-box-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
         }
         .vid-thumb-img {
             width: 100%;
             height: 300px;
             object-fit: cover;
+            border-radius: 0;
         }
     </style>
 </head>
@@ -138,17 +133,21 @@ $initial_show = 12; // Número de imágenes visibles inicialmente
                             </a>
                         </div>
                     <?php endforeach; ?>
-
-                    <?php if (count($images) > $initial_show): ?>
-                        <div class="col-12 text-center mt-40" id="loadMoreWrap">
-                            <button type="button" class="btn-load-more-gal" id="btnLoadMoreGallery">
-                                <i class="ti-reload"></i>
-                                <span>Cargar más fotos (<strong id="remainingCount"><?= count($images) - $initial_show ?></strong>)</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
                 <?php endif; ?>
             </div>
+
+            <!-- Fila separada para el botón Cargar Más (sin superposiciones) -->
+            <?php if (!empty($images) && count($images) > $initial_show): ?>
+            <div class="row" id="loadMoreWrap">
+                <div class="col-md-12 text-center btn-load-more-wrap" style="margin-top: 50px; margin-bottom: 20px;">
+                    <div class="butn-dark d-inline-block">
+                        <a href="javascript:void(0)" id="btnLoadMoreGallery">
+                            <span>Cargar más fotos (<strong id="remainingCount"><?= count($images) - $initial_show ?></strong>)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -311,7 +310,7 @@ $initial_show = 12; // Número de imágenes visibles inicialmente
             const btnLoadMore = document.getElementById('btnLoadMoreGallery');
             if (!btnLoadMore) return;
 
-            const batchSize = 6; // Cantidad de fotos adicionales a mostrar por clic
+            const batchSize = 5; // Carga en bloques de 5 fotos (1 ciclo armónico: 3 de col-4 + 2 de col-6)
 
             btnLoadMore.addEventListener('click', function (e) {
                 e.preventDefault();
